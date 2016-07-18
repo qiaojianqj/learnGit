@@ -5,3 +5,6 @@ git add file
 git commit -m "message"
 git status 
 git log
+git reflog
+git reset --hard HEAD@{2}
+
