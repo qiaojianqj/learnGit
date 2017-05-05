@@ -16,7 +16,10 @@ git diff file
 #add file to the repository stage
 git add file
 
-#commit the change of the current dir files to the repository's current branch
+#to unstage the file which has been added to the stage
+git reset HEAD file
+
+#commit the change of the current dir files which has been added to the stage to the repository's current branch
 git commit -m "comments messages"
 
 #display the committing log from nearest to farest
