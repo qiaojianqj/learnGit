@@ -35,6 +35,6 @@ git reset --hard 236f48e
 #remove file from git repository
 git rm file
 
-#to discard changes in working directory before git add operation
+#to discard changes(add or rm or change) in working directory before git add operation
 git checkout -- file
 
