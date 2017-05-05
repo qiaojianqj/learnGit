@@ -27,4 +27,5 @@ git reflog
 git reset --hard HEAD@{2}
 git reset --hard 236f48e
 
-
+#remove file from git repository
+git rm file
