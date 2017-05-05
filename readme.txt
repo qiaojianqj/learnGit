@@ -1,6 +1,7 @@
 #Learn Git
 #Git is a distributed version control system
 #Git is free software distributed under the GPL Lisence
+#Git has a mutable index called stage
 #Git tracks changes
 
 #change the current dir to a repository that can be managed by git
