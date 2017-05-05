@@ -29,3 +29,7 @@ git reset --hard 236f48e
 
 #remove file from git repository
 git rm file
+
+#to discard changes in working directory
+git checkout -- file
+
