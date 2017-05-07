@@ -70,6 +70,8 @@ git checkout xxx
 
 #create and switch to a new branch
 git checkout -b xxx
+#create local develop branch from remote develop branch
+git checkout -b develop origin/develop
 
 #merge a branch to current branch
 #when the two branch both have modified the same place, merging will be failed,now we must resolve the conflict by hand, then add and commit
