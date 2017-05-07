@@ -109,3 +109,5 @@ git stash apply stash@{0}
 git stash drop
 git stash clear
 
+#look up remote repository info 
+git remote -v
