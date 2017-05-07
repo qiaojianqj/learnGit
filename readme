@@ -96,6 +96,7 @@ git help cmd
 git push origin sub1
 #then on branch master execute: git push origin --delete sub1, this will detele the sub1 branch from the remote repository
 git push origin --delete sub1
+git push origin :sub1
 
 #force disable "Fast Forward" mode when merge branch with --no-ff, at this time, git will generate a commit
 git merge --no-ff -m "git merge --no-ff -m "comments"" 
@@ -111,3 +112,28 @@ git stash clear
 
 #look up remote repository info 
 git remote -v
+
+#create a tag on the default newest commit
+git tag tag_name
+
+#create a tag on the designated  commit
+git tag tag_name commit_id
+
+#look up all tags
+git tag
+
+#look up the designated tag info
+git show tag_name
+
+#delete a local repository tag
+git tag -d tag_name
+
+#push a tag to remote repository
+git push origin tag_name
+
+#push all tags to remote repository
+git push origin --tags
+
+#delete a remote repository tag
+git push origin --delete  v0.1
+git push origin :refs/tags/v0.1
