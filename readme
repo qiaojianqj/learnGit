@@ -41,4 +41,7 @@ git checkout -- file
 #to associate local repository with remote repository
 git remote add origin https://github.com/qiaojianqj/learnGit.git
 
+#push contents of the local repository to the remote repository
+git push -u origin master
+
 
