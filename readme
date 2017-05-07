@@ -57,7 +57,7 @@ git push -u origin master
 git pull origin
 
 #Often whe pull failed, to link the local branch with the remote branch
-git branch --set-upstream develop origin/develop
+git branch --set-upstream-to=origin/develop develop
 
 #clone a repository from remote repository to local using ssh
 git clone git@github.com:qiaojianqj/learnGit.git
