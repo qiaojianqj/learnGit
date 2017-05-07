@@ -77,6 +77,8 @@ git merge xxx
 
 #delete a branch
 git branch -d xxx
+#if want to drop a branch which has not been merged, use the following method to delete forcely
+git branch -D xxx
 
 #look up the branches merging graph
 git log --graph
