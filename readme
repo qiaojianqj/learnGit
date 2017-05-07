@@ -53,8 +53,11 @@ git remote add origin https://github.com/qiaojianqj/learnGit.git
 #later, push:git push origin master
 git push -u origin master
 
-#Often when push faild, Fetch from and merge with another repository or a local branch
+#Often when push failed, Fetch from and merge with another repository or a local branch
 git pull origin
+
+#Often whe pull failed, to link the local branch with the remote branch
+git branch --set-upstream-to=origin/develop develop
 
 #clone a repository from remote repository to local using ssh
 git clone git@github.com:qiaojianqj/learnGit.git
@@ -70,6 +73,8 @@ git checkout xxx
 
 #create and switch to a new branch
 git checkout -b xxx
+#create local develop branch from remote develop branch
+git checkout -b develop origin/develop
 
 #merge a branch to current branch
 #when the two branch both have modified the same place, merging will be failed,now we must resolve the conflict by hand, then add and commit
@@ -104,3 +109,5 @@ git stash apply stash@{0}
 git stash drop
 git stash clear
 
+#look up remote repository info 
+git remote -v
