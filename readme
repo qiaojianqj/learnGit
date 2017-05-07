@@ -84,4 +84,9 @@ git log --graph --pretty=oneline --abbrev-commit
 #look up git command help
 git help cmd
 
+#on branch sub1 execute: git push origin sub1, this will create a new branch named sub1 on remote repository
+git push origin sub1
+#then on branch master execute: git push origin --delete sub1, this will detele the sub1 branch from the remote repository
+git push origin --delete sub1
+
 
