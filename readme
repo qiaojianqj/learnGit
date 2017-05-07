@@ -26,7 +26,8 @@ git reset HEAD file
 git commit -m "comments messages"
 
 #display the committing log from nearest to farest
-git log / git log --pretty=oneline
+git log 
+git log --pretty=oneline
 
 #display the git command you have executed on the repository
 git reflog
