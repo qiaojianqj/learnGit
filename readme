@@ -69,9 +69,13 @@ git checkout xxx
 git checkout -b xxx
 
 #merge a branch to current branch
+#when the two branch both have modified the same place, merging will be failed,now we must resolve the conflict by hand, then commit
 git merge xxx
 
 #delete a branch
 git branch -d xxx
 
-end
+#look up the branches merging graph
+git log --graph
+
+
