@@ -39,6 +39,8 @@ git rm file
 git checkout -- file
 
 #to associate local repository with remote repository
+#use https:https://github.com/qiaojianqj/learnGit.git
+#use ssh:git@github.com:qiaojianqj/learnGit.git
 git remote add origin https://github.com/qiaojianqj/learnGit.git
 
 #push contents of the local repository to the remote repository
@@ -46,7 +48,7 @@ git remote add origin https://github.com/qiaojianqj/learnGit.git
 #later, push:git push origin master
 git push -u origin master
 
-#clone a repository from remote repository to local
+#clone a repository from remote repository to local using ssh
 git clone git@github.com:qiaojianqj/learnGit.git
 
 #look up branches
