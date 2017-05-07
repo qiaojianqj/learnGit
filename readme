@@ -69,7 +69,7 @@ git checkout xxx
 git checkout -b xxx
 
 #merge a branch to current branch
-#when the two branch both have modified the same place, merging will be failed,now we must resolve the conflict by hand, then commit
+#when the two branch both have modified the same place, merging will be failed,now we must resolve the conflict by hand, then add and commit
 git merge xxx
 
 #delete a branch
