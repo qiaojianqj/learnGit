@@ -42,6 +42,8 @@ git checkout -- file
 git remote add origin https://github.com/qiaojianqj/learnGit.git
 
 #push contents of the local repository to the remote repository
+#first time, push:git push -u origin master
+#later, push:git push origin master
 git push -u origin master
 
 
