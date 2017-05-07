@@ -12,6 +12,8 @@ git status
 
 #look up the difference between the changed file and the previous committed file
 git diff file
+#look up the difference betweent two committed versions
+git diff  877720c 8faf974
 
 #add file to the repository stage
 git add file
