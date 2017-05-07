@@ -53,8 +53,11 @@ git remote add origin https://github.com/qiaojianqj/learnGit.git
 #later, push:git push origin master
 git push -u origin master
 
-#Often when push faild, Fetch from and merge with another repository or a local branch
+#Often when push failed, Fetch from and merge with another repository or a local branch
 git pull origin
+
+#Often whe pull failed, to link the local branch with the remote branch
+git branch --set-upstream develop origin/develop
 
 #clone a repository from remote repository to local using ssh
 git clone git@github.com:qiaojianqj/learnGit.git
