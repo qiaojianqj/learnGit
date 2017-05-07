@@ -92,3 +92,13 @@ git push origin --delete sub1
 #force disable "Fast Forward" mode when merge branch with --no-ff, at this time, git will generate a commit
 git merge --no-ff -m "git merge --no-ff -m "comments"" 
 
+#master branch - develop branch - bug branch
+#when we are working on develop branch, now we have to resolve a bug at first, then we can hold the working dir by git stash, we can recover it after we have repaired the bug on the new created bug branch
+git stash
+git stash list
+git stash pop
+git stash apply stash@{0}
+git stash drop
+git stash clear
+
+
