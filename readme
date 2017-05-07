@@ -3,6 +3,7 @@
 #Git is a free software distributed under the GPL Lisence
 #Git has a mutable index called stage
 #Git tracks changes
+#qiaojian @ qiaojianwm@gmail.com
 
 #change the current dir to a repository that can be managed by git
 git init  
