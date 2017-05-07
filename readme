@@ -89,4 +89,6 @@ git push origin sub1
 #then on branch master execute: git push origin --delete sub1, this will detele the sub1 branch from the remote repository
 git push origin --delete sub1
 
+#force disable "Fast Forward" mode when merge branch with --no-ff, at this time, git will generate a commit
+git merge --no-ff -m "git merge --no-ff -m "comments"" 
 
