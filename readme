@@ -46,4 +46,6 @@ git remote add origin https://github.com/qiaojianqj/learnGit.git
 #later, push:git push origin master
 git push -u origin master
 
+#clone a repository from remote repository to local
+git clone git@github.com:qiaojianqj/learnGit.git
 
