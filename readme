@@ -14,6 +14,7 @@ git status
 git diff file
 #look up the difference betweent two committed versions
 git diff  877720c 8faf974
+git diff HEAD@{1} HEAD@{0}
 
 #add file to the repository stage
 git add file
