@@ -38,3 +38,7 @@ git rm file
 #to discard changes(add or rm or change) in working directory before git add operation
 git checkout -- file
 
+#to associate local repository with remote repository
+git remote add origin https://github.com/qiaojianqj/learnGit.git
+
+
