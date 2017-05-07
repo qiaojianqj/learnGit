@@ -74,4 +74,6 @@ git merge xxx
 #delete a branch
 git branch -d xxx
 
+#look up branches merge graph
+git log --graph
 
