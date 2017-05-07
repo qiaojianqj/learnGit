@@ -50,6 +50,9 @@ git remote add origin https://github.com/qiaojianqj/learnGit.git
 #later, push:git push origin master
 git push -u origin master
 
+#Often when push faild, Fetch from and merge with another repository or a local branch
+git pull origin
+
 #clone a repository from remote repository to local using ssh
 git clone git@github.com:qiaojianqj/learnGit.git
 
