@@ -77,3 +77,34 @@ s2 = set([2, 3, 4])
 print(s2)
 print(s1 & s2)
 print(s1 | s2)
+
+#function
+func_alias = max
+print(func_alias(0, -7, 3))
+
+def my_abs(x):
+	if not isinstance(x, (int, float)):
+		raise TypeError('bad operand type')
+	if x >= 0:
+		return x
+	else:
+		return -x
+
+def nop():
+	pass
+
+print(my_abs(-7))	
+#print(my_abs('7'))	
+print(nop())
+
+import math
+
+def move(x, y, step, angle=0):
+	nx = x + step * math.cos(angle)
+	ny = y - step * math.sin(angle)
+	return nx, ny
+x, y = move(100, 100, 60, math.pi / 6)
+print(x, y)
+z = move(100, 100, 60, math.pi / 6)
+print(z)
+
