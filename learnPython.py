@@ -108,3 +108,58 @@ print(x, y)
 z = move(100, 100, 60, math.pi / 6)
 print(z)
 
+#可变参数
+def calc(*numbers):
+	sum = 0
+	for n in numbers:
+		sum = sum + n * n
+	return sum
+nums = [1, 2, 3]
+print(calc(*nums))
+
+#关键字参数
+def person(name, age, **kw):
+	print('name:', name, 'age:', age, 'other:', kw)
+(person('Michael', 30))
+(person('Adam', 45, gender='M', job='Engineer'))
+extra = {'city': 'Beijing', 'job': 'Engineer'}
+(person('Jack', 24, **extra))
+
+#命名关键字参数
+#def person(name, age, *, city, job):
+#	print(name, age, city, job)
+
+def person(name, age, *args, city, job):
+	print(name, age, args, city, job)
+person('Jack', 24, city='Beijing', job='Engineer')
+
+#命名关键字参数可以有缺省值
+def person(name, age, *, city='Beijing', job):
+	print(name, age, city, job)
+person('Jack', 24, job='Engineer')
+
+#参数定义的顺序必须是：必选参数、默认参数、可变参数、命名关键字参数和关键字参数
+def person(name, age, marriage = 'FALSE', *, city = 'ChengDu', job):
+	print('name: ', name, 'age: ', age, 'marriage: ', marriage, 'city: ', city, 'job: ', job)
+person('qiaojian', 28, job = 'NoJob')
+
+#对于任意函数，都可以通过类似func(*args, **kw)的形式调用它，无论它的参数是如何定义的
+def f1(a, b, c=0, *args, **kw):
+	print('a =', a, 'b =', b, 'c =', c, 'args =', args, 'kw =', kw)
+
+def f2(a, b, c=0, *, d, **kw):
+	print('a =', a, 'b =', b, 'c =', c, 'd =', d, 'kw =', kw)
+f1(1, 2)
+f1(1, 2, c=3)
+f1(1, 2, 3, 'a', 'b')
+f1(1, 2, 3, 'a', 'b', x=99)
+f2(1, 2, d=99, ext=None)
+
+args = (1, 2, 3, 4)
+kw = {'d': 99, 'x': '#'}
+f1(*args, **kw)
+
+args = (1, 2, 3)
+kw = {'d': 99, 'x': '#'}
+f2(*args, **kw)
+
