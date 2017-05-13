@@ -1,0 +1,10 @@
+hello.c: struct size / bss data stack heap section
+
+process.c: fork and execve
+
+calc.c / test.c:
+1. static library usage
+ gcc -c calc.c / ar rv libcalc.a calc.o / gcc -o test test.c -L. -lcalc / ./test (without libcalc.a OK anyway)
+2. dynamic libray usage
+ gcc -shared -fPIC -o libcalc.so calc.c / gcc -o test test.c -L. -lcalc / export LD_LIBRARY_PATH=$(pwd) / ./test (without libcalc.so can't run) 
+
