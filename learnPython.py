@@ -163,3 +163,24 @@ args = (1, 2, 3)
 kw = {'d': 99, 'x': '#'}
 f2(*args, **kw)
 
+#recursive
+def fact(n):
+	if n==1:
+		return 1
+	return n * fact(n - 1)
+print(fact(100))
+
+#slice
+L = list(range(20))
+print(L)
+print(L[:3])
+print(L[-3:])
+print(L[3:6])
+print(L[:10:2])
+print(L[::5])
+print(L[::])
+print(L[:])
+
+print((0,1,2,3,4,5)[:3])
+print('abcdefg'[::2])
+
