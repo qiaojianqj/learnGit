@@ -7,4 +7,7 @@ calc.c / test.c:
  gcc -c calc.c / ar rv libcalc.a calc.o / gcc -o test test.c -L. -lcalc / ./test (without libcalc.a OK anyway)
 2. dynamic libray usage
  gcc -shared -fPIC -o libcalc.so calc.c / gcc -o test test.c -L. -lcalc / export LD_LIBRARY_PATH=$(pwd) / ./test (without libcalc.so can't run) 
+3. diassemble test to testasm
+ objdump -d test > testasm
+
 
