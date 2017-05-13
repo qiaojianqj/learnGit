@@ -1,0 +1,8 @@
+#!/bin/sh
+
+#list section size and total size of elf file
+size ./learnC++/a.out
+
+#write message to stderr about the time statistic the program run
+time ./learnC++/a.out
+
