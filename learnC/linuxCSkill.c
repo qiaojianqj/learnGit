@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 
 /*
@@ -7,6 +8,31 @@
  *继承：抽象出共性形成基类，子类添加自己的特性。参考strut list_head;
  *多态：通过共同的接口，实现对不同实现体的调用。通过container_of宏实现基类指针到具体子类指针的转换。
  */
+
+/*
+ *Linux C 结构体成员－零长度数组
+ *作用：为结构体内的数据分配一个连续的内存，方便内存释放，提高访问速度，减少内存碎片
+ *结构体中的零长度数组成员不占结构体size，仅是个占位标示符
+ *直到为结构体分配了内存后，这个占位标示符才成为一个有长度的数组
+ */
+struct line{
+	int length;
+	char contents[]; //同char contents[0];
+};
+
+/*
+ *数组名作为函数形参后，数组名变成一个普通指针
+ */
+void arrayTest(char str[])
+{
+	 printf("sizeof str:%d\n",sizeof(str));
+	 printf("str:%s\n",str);
+	 str++;
+	 printf("after str++:%s\n",str);
+	 str = "now str point to here";
+	 printf("after modify str:%s\n",str);
+
+}
 
 /*
  *一种定义函数指针的方法
@@ -148,7 +174,42 @@ int main()
 	}
 
 	//表达式({A;B;C;})返回的值是C的值
-	int a = ({1;2;3;});
-	printf("({1;2;3}): %d\n", a);
+	int i = ({1;2;3;});
+	printf("({1;2;3}): %d\n", i);
+
+	//结构体的零长度数组成员(最后个成员)
+	int this_length = 10;
+	printf("sizeof line: %d\n", sizeof(struct line));
+	struct line *thisline = (struct line *)malloc(sizeof(struct line) + this_length);
+	thisline->length = this_length;
+    strcpy(thisline->contents, "balabala");	
+	free(thisline);
+
+	//数组int a[5]
+	//数组名的内涵：指代数组
+	//数组名a可看作一个指向int型的常量指针
+	//在以下三中场合下，数组名并不是用常量指针来表示，就是数组名作为sizeof操作符/单目操作符&的操作数以及作为函数形参时。 
+	//1. sizeof返回整个数组的长度，而不是指向数组的指针的长度。 
+	//2. 取一个数组名的地址(&a)所产生的是一个指向数组的指针，而不是一个指向某个常量指针的指针。
+	//3. 数组名作为函数形参时，其全面沦落为一个普通指针，不再具有常量性，可自增自减可修改。
+	int a[5] = {0};
+	printf("%x\n", a);
+	printf("%x\n", a+1);
+	printf("%x\n", &a);
+	printf("%x\n", &a+1);
+	printf("sizeof a: %x\n", sizeof(a));
+	/*
+	(gdb) p a
+		$2 = {0, 0, 0, 0, 0}
+	(gdb) p a+1
+		$3 = (int *) 0x7fff5fbffb64
+		(gdb) p &a
+		$4 = (int (*)[5]) 0x7fff5fbffb60
+		(gdb) p &a+1
+		$5 = (int (*)[5]) 0x7fff5fbffb74
+	*/
+	char str1[20] = "I Love fuck U";
+	arrayTest(str1);
+
 	return 0;
 }
