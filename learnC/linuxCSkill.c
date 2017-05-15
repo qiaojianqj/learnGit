@@ -60,7 +60,43 @@ read_proc_t *proc_read;
 	(type *)( (char *)__mptr - offsetof(type,member) );})    
 
 /*
+ *Linux hash链表
+ *散列表的目的是为了方便快速的查找，所以散列表通常是一个比较大的数组，否则“冲突”的概率会非常大，这样就失去了散列表的意义。如何来做到既能维护一张大表，又能不占用过多的内存呢?此时对于哈希表的每个entry(表头结点)它的结构体中只能存放一个指针。这样做的话可以节省一半的指针空间，尤其是在hash bucket很大的情况下。（如果有两个指针域将占用8个字节空间）
+ *
+ *hlist的结点有两个指针，但是pprev是指针的指针，它指向的是前一个结点的next指针，为什么要采用pprev，而不采用一级指针？
+ *1> 为了能统一地修改表头的first指针:通过一致的pprev指针访问和修改前结点的next（或first）指针
+ *2> 解决了数据结构不一致:hlist_head和hlist_node不一致，但是hlist_head和hlist_node指向的下一个节点的指针类型相同
+ *                |------|     |------|           |------|
+ *  |-------|     | data |     | data |           | data |
+ *  |       |     |------|     |------|           |------|
+ *  |       |	  | node |     | node |           | node |
+ *  |-------|     |------|     |------|  ... ...  |------|
+ * 	| first |---->| next |---->| next |--->   --->| next |---> NULL
+ *  |-------|     |------|     |------|           |------|
+ * 	|       |<----| pprev|<----| pprev|<---   <---| pprev|
+ *	|-------|     |------|     |------|           |------|
+ *  HashTable
+ * /
+struct hlist_head {
+		struct hlist_node *first;
+};
+
+struct hlist_node {
+		struct hlist_node *next, **pprev;
+};
+
+/*
  *Linux 双向链表
+ *                |------|     |------|           |------|
+ *  			  | data |     | data |           | data |
+ *                |------|     |------|           |------|
+ *     head       | node |     | node |           | node |
+ *   |------|     |------|     |------|  ... ...  |------|
+ * 	 | prev |<----| prev |<----| prev |<---   <---| prev |
+ *   |------|     |------|     |------|           |------|
+ * 	 | next |---->| next |---->| next |--->   --->| next |
+ *	 |------|     |------|     |------|           |------|
+ *
  */
 struct list_head {
 	struct list_head *next, *prev;
