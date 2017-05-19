@@ -9,5 +9,7 @@ calc.c / test.c:
  gcc -shared -fPIC -o libcalc.so calc.c / gcc -o test test.c -L. -lcalc / export LD_LIBRARY_PATH=$(pwd) / ./test (without libcalc.so can't run) 
 3. diassemble test to testasm
  objdump -d test > testasm
+4. use dlopen,dlsym,dlclose to install,uninstall dynamic library function
+ cp libcalc.so /usr/lib / gcc test.c -ldl / ./a.out
 
 
