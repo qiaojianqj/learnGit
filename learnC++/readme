@@ -1,4 +1,4 @@
-hello.c: struct size / bss data stack heap section
+structsize.c: struct size / bss data stack heap section
 
 process.c: fork and execve
 
