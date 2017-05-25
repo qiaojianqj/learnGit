@@ -17,12 +17,6 @@ print('classmates[2] =', classmates[2])
 print('classmates[-1] =', classmates[-1])
 
 classmates = ['Kobe', 'James', 'Rose']
-print('classmates =', classmates)
-print('len(classmates) =', len(classmates))
-print('classmates[0] =', classmates[0])
-print('classmates[1] =', classmates[1])
-print('classmates[2] =', classmates[2])
-print('classmates[-1] =', classmates[-1])
 classmates.pop()
 print('classmates =', classmates)
 
@@ -64,9 +58,7 @@ d = {
 'Tracy': 85
 }
 print('Thomas' in d)
-print('d[\'Michael\'] =', d['Michael'])
 print('d[\'Bob\'] =', d['Bob'])
-print('d[\'Tracy\'] =', d['Tracy'])
 print('d.get(\'Thomas\', -1) =', d.get('Thomas', -1))
 d.pop('Bob')
 print(d)
@@ -94,7 +86,6 @@ def nop():
 	pass
 
 print(my_abs(-7))	
-#print(my_abs('7'))	
 print(nop())
 
 import math
@@ -184,3 +175,19 @@ print(L[:])
 print((0,1,2,3,4,5)[:3])
 print('abcdefg'[::2])
 
+#iterator
+dic = {'a':1, 'b':2, 'c':3}
+for key in dic:
+	print(key)
+
+for value in dic.values():
+	print(value)
+
+for k,v in dic.items():
+	print(k,v)
+
+for i, value in enumerate(['A', 'B', 'C']):
+	print(i, value)
+#judge can iterator or not
+from collections import Iterable
+print( isinstance('abc', Iterable) ) #str是否可迭代
