@@ -31,7 +31,8 @@ int main(void) {
 		return EXIT_FAILURE;
 	}
 	//Write each string in turn
-	for (unsigned int n=0; n<8; n++) {
+	unsigned int n;
+	for (n=0; n<8; n++) {
 		char L = (char)strlen(strMessage[n]);
 		write(fd, &L, 1);	//Send string length
 		write(fd, strMessage[n], strlen(strMessage[n])); 	//Send string characters

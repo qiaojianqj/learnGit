@@ -164,10 +164,11 @@ int main()
 {
 	struct Person *pPerson = NULL;
 	struct list_head *p;
+	int i;
 	//初始化双向链表
 	LIST_HEAD(person_head);
 	//向链表添加节点	
-	for(int i = 0; i < 5; ++i)
+	for(i = 0; i < 5; ++i)
 	{
 		pPerson = (struct Person *)malloc(sizeof(struct Person));	
 		sprintf(pPerson->name, "%s%d", "Person", i+1);
@@ -210,8 +211,8 @@ int main()
 	}
 
 	//表达式({A;B;C;})返回的值是C的值
-	int i = ({1;2;3;});
-	printf("({1;2;3}): %d\n", i);
+	int j = ({1;2;3;});
+	printf("({1;2;3}): %d\n", j);
 
 	//结构体的零长度数组成员(最后个成员)
 	int this_length = 10;
