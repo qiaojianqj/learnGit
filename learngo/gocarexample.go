@@ -6,9 +6,9 @@ import (
 
 type Any interface{}
 type Car struct {
-	Model   	string
+	Model			string
 	Manufacturer	string
-	BuildYear	int
+	BuildYear		int
     // ...
 }
 type Cars []*Car

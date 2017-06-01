@@ -20,7 +20,7 @@ const (
 )
 func main(){
 	v2, v5 = 2, 5.0
-	_, v6 = "anyvalue", 6 //_ used to dicard some value
+	_, v6 = "anyvalue", 6 //_ used to discard some value
 
 	v3 := 3 //only can lay in func, local var must be used after be declared
 	println("Hello, World!")
