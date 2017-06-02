@@ -20,6 +20,13 @@ Hack& operator> (Hack &a, Hack &b)
 	return a;
 }
 
+//非类型模版参数：常量值
+template<unsigned int N, unsigned M>
+int compare(const char (&p1) [N], const char (&p2) [M])
+{
+	return strcmp(p1, p2);
+}
+
 int main()
 {
 	int i = 1;
@@ -34,5 +41,6 @@ int main()
 	Hack foo;
 	vector<UINT4> foo;
 
+	cout<<compare("Hi", "Hello")<<endl;
 	return 0;
 }

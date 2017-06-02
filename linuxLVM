@@ -1,0 +1,55 @@
+Basic LVM Layout:
+-----------------------------------------------------------------------------
+Logical Volumes | /dev/fileserv/share |  /dev/fileserv/backup |    unused   |
+-----------------------------------------------------------------------------
+  Volume Groups |			        	fileserv                            |
+-----------------------------------------------------------------------------
+Physical Volumes| /dev/sda1 | /dev/sdb1 | /dev/sdc1 | /dev/sdd1 | /dev/sde1 |
+-----------------------------------------------------------------------------
+
+LVM Layout on RAID1:
+-----------------------------------------------------------------------------
+Logical Volumes | /dev/mapper/fileserv-share |  /dev/mapper/fileserv-backup |
+-----------------------------------------------------------------------------
+  Volume Groups |			        	fileserv                            |
+-----------------------------------------------------------------------------
+	RAID arrays |          /dev/md0         |           /dev/md1            |
+-----------------------------------------------------------------------------
+Physical Volumes| /dev/sda1 | /dev/sdb1 | /dev/sdc1 | /dev/sdd1 | /dev/sde1 |
+-----------------------------------------------------------------------------
+
+LVM Operation Linux cmd:
+ 1. fdisk -l
+ 2. fdisk /dev/sda
+ 3. pvcreate /dev/sda1
+ 4. pvremove /dev/sda1
+ 5. pvmove /dev/sda1 /dev/sdb1
+ 6. pvdisplay
+ 7. vgcreate fileserv /dev/sda1 /dev/sdb1 /dev/sdc1 /dev/sdd1 /dev/sde1
+ 8. vgdisplay
+ 9. vgscan
+10. vgrename fileserv data
+11. vgreduce fileserv /dev/sda1
+12. vgremove data
+13. lvcreate --name share --size 40G fileserv
+14. lvdisplay
+15. lvscan
+16. lvremove /dev/fileserv/share
+17. lvextend -L10G /dev/fileserv/share
+18. lvreduce -L10G /dev/fileserv/share
+19. mkfs.ext3 /dev/fileserv/share
+20. mkdir /mnt/share /mnt/backup
+21. mount /dev/fileserv/share /mnt/share
+22. df -ah
+23. vim /etc/fstab; adding as follow:
+	/dev/fileserver/share   /mnt/share     ext3       rw,noatime    0 0
+24. reboot 
+25. umount /mnt/share
+26. e2fsck -f /dev/fileserv/share
+27. resize2fs /dev/fileserv/share
+28. mdadm --create /dev/md0 --auto=yes -l 1 -n 2 /dev/sdc1 missing
+29. mdadm --create /dev/md2 --auto=yes -l 1 -n 2 /dev/sdb2 /dev/sdc2
+30. mdadm --manage /dev/md1 --add /dev/sda1 
+31. mdadm --manage /dev/md0 --fail /dev/sdb1
+32. mdadm --manage /dev/md0 --remove /dev/sdb1
+33. cat /proc/mdstat
