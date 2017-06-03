@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstring>
+#include <iterator>
 #include <numeric>
 #include <vector>
 
@@ -42,5 +44,21 @@ int main()
 	vector<UINT4> foo;
 
 	cout<<compare("Hi", "Hello")<<endl;
+
+	//stl string copy on write
+	string str1 = "hello world";
+	string str2 = str1;
+		 
+	cout<<"Sharing the memory:"<<endl;
+	cout<<"str1's address: "<<static_cast<const void*>(str1.c_str())<<endl;
+	cout<<"str2's address: "<<static_cast<const void*>(str2.c_str())<<endl;
+					 
+	str1[1]='q';
+	str2[1]='w';
+							 
+	cout<<"After Copy-On-Write:"<<endl;
+	cout<<"str1's address: "<<static_cast<const void*>(str1.c_str())<<endl;
+	cout<<"str2's address: "<<static_cast<const void*>(str2.c_str())<<endl;
+
 	return 0;
 }
