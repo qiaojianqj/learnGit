@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+/*
+ c operator precedence
+ *p++ will be parsed to *(p++)
+*/
 char *mystrcpy(char *dest, char *src)
 {
 	char * head = dest;
@@ -27,14 +30,14 @@ char * mystrcat(char * dest, const char * src)
 int main()
 {
 	char *str1 = "what fuck";
-	char *str2 = (char *)malloc(sizeof(char)*20); 
-	char *str3 = (char *)malloc(sizeof(char)*20); 
+	char *str2 = (char *)malloc(sizeof(char)*20);
+	char *str3 = (char *)malloc(sizeof(char)*20);
 
-	char *str4 = mystrcpy(str2, str1);	
+	char *str4 = mystrcpy(str2, str1);
 	printf("str1: %s, str2: %s\n", str1, str2);
 	printf("str4: %s\n", str4);
-	
-    char *str5 = mystrncpy(str3, str1, 4);	
+
+    char *str5 = mystrncpy(str3, str1, 4);
 	printf("str1: %s, str3: %s\n", str1, str3);
 	printf("str5: %s\n", str5);
 
