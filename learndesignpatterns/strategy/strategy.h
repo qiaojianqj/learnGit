@@ -1,6 +1,8 @@
 #ifndef __STRATEGY_H__
 #define __STRATEGY_H__
-
+/*
+ *策略模式：定义算法族，分别封装起来，让算法到变化独立于使用算法到客户
+ */
 class FlyBehavior{
 public:
 	virtual void fly() = 0;

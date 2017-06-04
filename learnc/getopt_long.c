@@ -64,11 +64,11 @@ int main(int argc, char *argv[]) {
     for (i = optind; i < argc; ++i)
       printf("Argument : %s\n", argv[i]);
   }
-
+/*
   char **var;
   for (var = environ; *var != NULL; ++var)
     printf("%s\n", *var);
-
+*/
   /* 主程序到这里结束。*/
   return 0;
 }
