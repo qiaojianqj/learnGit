@@ -2,12 +2,11 @@ package main
 
 import (
 	"fmt"
-	"time"
 )
 
 func main() {
 	suck(pump())
-	time.Sleep(1e9)
+	for{}
 }
 
 func pump() chan int {

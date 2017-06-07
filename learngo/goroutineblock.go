@@ -15,15 +15,15 @@ import (
 )
 
 func  main()  {
-  ch := make(chan int)
+  ch := make(chan int, 10)
   go push(ch)
   go pull(ch)
   time.Sleep(1e6)
 }
 
 func push(ch chan int)  {
+  var i int = 0
   for{
-    var i int = 0
     ch <- i
     i++
   }

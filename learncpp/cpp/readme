@@ -1,3 +1,10 @@
-1. use valgrind to detect memory leak etc. errors in c/c++ exe files
+1. testvalgrind.cpp
+	use valgrind to detect memory leak etc. errors in c/c++ exe files
 	g++ testvalgrind.cpp -o testvalgrind
 	valgrind --tool=memcheck --leak-check=yes ./testvalgrind
+
+2. cpphack.cc
+	vector is not a C++ keyword
+	非类型模版参数：常量值
+	string: Copy-On-Write
+	函数返回值为对象时会构造临时对象，gcc对此有相应到ROV优化处理
