@@ -1,14 +1,15 @@
 package main
+
 import (
 	"fmt"
 	"sync"
 )
 
-func race(){
+func race() {
 	var wg sync.WaitGroup
 	wg.Add(5)
-	for i := 0; i < 5; i++{
-		go func(){
+	for i := 0; i < 5; i++ {
+		go func() {
 			fmt.Println(i)
 			wg.Done()
 		}()
@@ -17,12 +18,12 @@ func race(){
 	fmt.Println()
 }
 
-func norace(){
+func norace() {
 	var wg sync.WaitGroup
 	wg.Add(5)
-	for i := 0; i < 5; i++{
+	for i := 0; i < 5; i++ {
 		n := i
-		go func(){
+		go func() {
 			fmt.Println(n)
 			wg.Done()
 		}()
@@ -30,7 +31,7 @@ func norace(){
 	wg.Wait()
 	fmt.Println()
 }
-func main(){
-//	race()
+func main() {
+	//	race()
 	norace()
 }

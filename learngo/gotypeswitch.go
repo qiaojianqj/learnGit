@@ -1,10 +1,11 @@
 package main
+
 import (
 	"fmt"
 )
 
-func main(){
-	classifier(13,14.5, complex64(4), nil, false)
+func main() {
+	classifier(13, 14.5, complex64(4), nil, false)
 }
 
 func classifier(items ...interface{}) {

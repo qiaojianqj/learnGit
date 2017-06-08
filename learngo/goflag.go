@@ -45,6 +45,7 @@ func cat_slice(f *os.File) {
 		}
 	}
 }
+
 /**/
 
 func main() {
@@ -59,9 +60,9 @@ func main() {
 			continue
 		}
 		cat(bufio.NewReader(f))
-    /**/
-    cat_slice(f)
-    defer f.Close()
-    /**/
+		/**/
+		cat_slice(f)
+		defer f.Close()
+		/**/
 	}
 }

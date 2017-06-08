@@ -30,9 +30,9 @@ func main() {
 package main
 
 import (
+	"fmt"
 	"io"
 	"net/http"
-  "fmt"
 )
 
 const form = `
@@ -43,11 +43,13 @@ const form = `
 		</form>
 	</body></html>
 `
+
 var times = 0
+
 /* handle a simple get request */
 func SimpleServer(w http.ResponseWriter, request *http.Request) {
-  times++
-  fmt.Printf("test1 get times: %d\n", times)
+	times++
+	fmt.Printf("test1 get times: %d\n", times)
 	fmt.Fprintf(w, "<h1>hello, world! GET times: %d</h1>", times)
 }
 
@@ -56,14 +58,14 @@ func FormServer(w http.ResponseWriter, request *http.Request) {
 	switch request.Method {
 	case "GET":
 		/* display the form to the user */
-    fmt.Printf("test2 get\n")
+		fmt.Printf("test2 get\n")
 		io.WriteString(w, form)
 	case "POST":
 		/* handle the form data, note that ParseForm must
 		   be called before we can extract form data */
 		//request.ParseForm();
 		//io.WriteString(w, request.Form["in"][0])
-    fmt.Printf("test2 post\n")
+		fmt.Printf("test2 post\n")
 		io.WriteString(w, request.FormValue("in"))
 	}
 }

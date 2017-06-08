@@ -1,21 +1,22 @@
 //use channel to implement sem
 package main
+
 import (
-  "fmt"
+	"fmt"
 )
 
-func main(){
-  s := []int{12, 4, 69, 23, 19, 7, 53}
-  done := make(chan bool)
-  doPrint := func(s []int){
-    fmt.Println(s)
-    done <- true
-  }
-  go doPrint(s[:3])
-  go doPrint(s[3:])
+func main() {
+	s := []int{12, 4, 69, 23, 19, 7, 53}
+	done := make(chan bool)
+	doPrint := func(s []int) {
+		fmt.Println(s)
+		done <- true
+	}
+	go doPrint(s[:3])
+	go doPrint(s[3:])
 
-  <-done
-  <-done
+	<-done
+	<-done
 }
 
 //use no buf channel to implement parallel for loop
@@ -27,7 +28,6 @@ for i, v := range data {
 	} (i, v)
 }
 */
-
 
 //use buf channel to implement semaphore
 /*

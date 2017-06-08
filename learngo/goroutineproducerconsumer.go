@@ -6,7 +6,8 @@ import (
 
 func main() {
 	suck(pump())
-	for{}
+	for {
+	}
 }
 
 func pump() chan int {

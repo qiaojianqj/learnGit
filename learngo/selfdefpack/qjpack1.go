@@ -1,10 +1,8 @@
-package qjpack1
+package qjpack
 
-type qjName struct{
+type qjName struct {
 	chineseName string
 	englishName string
 }
 
-func GetQjName () *qjName{
-	return &qjName{"QiaoJian", "Leo"}
-}
+var MyName qjName
