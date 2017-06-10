@@ -1,6 +1,6 @@
 package qjpack
 
-func SetMyName(){
+func SetMyName() {
 	MyName.chineseName = "QiaoJian"
 	MyName.englishName = "Leo"
 }
