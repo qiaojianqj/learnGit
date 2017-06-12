@@ -12,22 +12,26 @@ type Square struct {
 	side float32
 }
 
-func (sq *Square) Area() float32 {
+func (sq Square) Area() float32 {
 	return sq.side * sq.side
 }
+
+func (sq Square) parameter() float32 {
+	return sq.side * 4
+}
+
+
 
 func main() {
 	sq1 := new(Square)
 	sq1.side = 5
 
-	//error:cannot use sq1 (type *Square) as type Shaper in assignment
-	//var areaIntf Shaper
-	//areaIntf = sq1
-
-	//error:cannot convert sq1 (type *Square) to type Shaper
-	//areaIntf := Shaper(sq1)
-
-	areaIntf := sq1
-	fmt.Printf("The type of areaIntf: %T\n", areaIntf)
-	fmt.Printf("The square has area: %f\n", areaIntf.Area())
+	var interf Shaper
+	//when Type(not *Type) implements interface, 
+	//assign *sq1 and sq1 to interf both ok 
+	//interf = *sq1
+	interf = sq1
+	fmt.Printf("interf value: %v,  type: %T\n",interf , interf)
+	fmt.Printf("The square has area: %f\n", interf.Area())
+	fmt.Printf("The square has area: %f\n", interf.parameter())
 }
