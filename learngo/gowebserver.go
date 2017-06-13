@@ -33,6 +33,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 )
 
 const form = `
@@ -47,10 +48,20 @@ const form = `
 var times = 0
 
 /* handle a simple get request */
-func SimpleServer(w http.ResponseWriter, request *http.Request) {
+func SimpleServer(w http.ResponseWriter, r *http.Request) {
 	times++
 	fmt.Printf("test1 get times: %d\n", times)
 	fmt.Fprintf(w, "<h1>hello, world! GET times: %d</h1>", times)
+	r.ParseForm()
+	fmt.Println(r.Form)
+	fmt.Println("path:", r.URL.Path)
+	fmt.Println("scheme:", r.URL.Scheme)
+	//http://localhost:8088/?url_long=111&url_long=222
+	fmt.Println(r.Form["url_long"])
+	for k, v := range r.Form {
+		fmt.Println("key:", k)
+		fmt.Println("val:", strings.Join(v, ""))
+	}
 }
 
 func FormServer(w http.ResponseWriter, request *http.Request) {
@@ -71,7 +82,7 @@ func FormServer(w http.ResponseWriter, request *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/test1", SimpleServer)
+	http.HandleFunc("/", SimpleServer)
 	http.HandleFunc("/test2", FormServer)
 	if err := http.ListenAndServe(":8088", nil); err != nil {
 		panic(err)
