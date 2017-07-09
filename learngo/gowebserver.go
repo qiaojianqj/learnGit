@@ -82,7 +82,7 @@ func FormServer(w http.ResponseWriter, request *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/", SimpleServer)
+	http.HandleFunc("/test1", SimpleServer)
 	http.HandleFunc("/test2", FormServer)
 	if err := http.ListenAndServe(":8088", nil); err != nil {
 		panic(err)
