@@ -5,8 +5,18 @@ import (
 	"testing"
 	"time"
 
+	"./mock"
+	. "github.com/golang/mock/gomock"
 	. "github.com/smartystreets/goconvey/convey"
 )
+
+func TestCompany(t *testing.T) {
+	ctl := NewController(t)
+	mockTalker := mock_word.NewMockTalker(ctl)
+	mockTalker.EXPECT().SayHello(Eq("cao ni ma")).Return("welcom wang ni ma")
+	company := NewCompany(mockTalker)
+	t.Log(company.Meeting("cao ni ma"))
+}
 
 //go test
 func TestStringSliceEqual(t *testing.T) {

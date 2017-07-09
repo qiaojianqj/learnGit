@@ -2,6 +2,28 @@ package word
 
 import "unicode"
 
+//Talker interface
+type Talker interface {
+	SayHello(word string) (response string)
+}
+
+//Company struct
+type Company struct {
+	Usher Talker
+}
+
+//NewCompany func
+func NewCompany(t Talker) *Company {
+	return &Company{
+		Usher: t,
+	}
+}
+
+//Meeting member func
+func (c *Company) Meeting(guestName string) string {
+	return c.Usher.SayHello(guestName)
+}
+
 //IsPalindrome 回文判断
 func IsPalindrome(s string) bool {
 	letters := make([]rune, 0, len(s))
