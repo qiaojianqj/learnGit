@@ -1,3 +1,4 @@
+/*
 package main
 
 import (
@@ -35,4 +36,32 @@ func main() {
 	// call the first method, which is String():
 	results := value.Method(0).Call(nil)
 	fmt.Println(results) // [Ada - Go - Oberon]
+}
+*/
+
+package main
+
+import (
+	"fmt"
+	"reflect"
+)
+
+func say(text ...string) {
+	fmt.Println(text)
+}
+
+func Call(m map[string]interface{}, name string, params ...interface{}) (result []reflect.Value) {
+	f := reflect.ValueOf(m[name])
+	in := make([]reflect.Value, len(params))
+	for k, param := range params {
+		in[k] = reflect.ValueOf(param)
+	}
+	result = f.Call(in)
+	return
+}
+
+func main() {
+	var funcMap = make(map[string]interface{})
+	funcMap["say"] = say
+	Call(funcMap, "say", "hello", "world", "11/7 2017")
 }
