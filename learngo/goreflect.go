@@ -52,9 +52,11 @@ func say(text ...string) {
 
 func Call(m map[string]interface{}, name string, params ...interface{}) (result []reflect.Value) {
 	f := reflect.ValueOf(m[name])
+	fmt.Println(f.Type())
 	in := make([]reflect.Value, len(params))
 	for k, param := range params {
 		in[k] = reflect.ValueOf(param)
+		fmt.Println(in[k]) //in[k].Type: string
 	}
 	result = f.Call(in)
 	return
