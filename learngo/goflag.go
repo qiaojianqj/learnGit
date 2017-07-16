@@ -66,3 +66,25 @@ func main() {
 		/**/
 	}
 }
+
+/*
+package main
+
+import (
+	"flag"
+	"fmt"
+)
+
+func main() {
+	b := flag.Bool("bvar", false, "Bool flag test")
+	var svar string
+	flag.StringVar(&svar, "svar", "defalt string var", "stringvar test")
+
+	flag.Parse()
+
+	fmt.Println("Bool flag: ", *b)
+	fmt.Println("stringvar: ", svar)
+
+	fmt.Println("tail: ", flag.Args())
+}
+*/
