@@ -1,5 +1,7 @@
 package main
 
+//https://studygolang.com/articles/9045
+
 import (
 	"fmt"
 	"sync"
@@ -8,6 +10,7 @@ import (
 func gen(done <-chan interface{}, num ...int) <-chan int {
 	out := make(chan int)
 	go func() {
+		defer close(out)
 		for _, n := range num {
 			select {
 			case out <- n:
@@ -15,7 +18,6 @@ func gen(done <-chan interface{}, num ...int) <-chan int {
 				return
 			}
 		}
-		close(out)
 	}()
 	return out
 }
@@ -23,6 +25,7 @@ func gen(done <-chan interface{}, num ...int) <-chan int {
 func sq(done chan interface{}, in <-chan int) <-chan int {
 	out := make(chan int)
 	go func() {
+		defer close(out)
 		for n := range in {
 			select {
 			case out <- n * n:
@@ -30,7 +33,6 @@ func sq(done chan interface{}, in <-chan int) <-chan int {
 				return
 			}
 		}
-		close(out)
 	}()
 	return out
 }
@@ -40,6 +42,7 @@ func merge(done chan interface{}, ches ...<-chan int) <-chan int {
 	out := make(chan int, 0)
 
 	output := func(ch <-chan int) {
+		defer wg.Done()
 		for n := range ch {
 			select {
 			case out <- n:
@@ -47,7 +50,6 @@ func merge(done chan interface{}, ches ...<-chan int) <-chan int {
 				return
 			}
 		}
-		wg.Done()
 	}
 	wg.Add(len(ches))
 	for _, ch := range ches {
