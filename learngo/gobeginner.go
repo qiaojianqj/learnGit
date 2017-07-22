@@ -158,6 +158,8 @@ func panicWithRecover() {
 	foo()
 }
 
+//http://www.grdtechs.com/2016/02/17/go-reflect-summarize/
+
 type User struct {
 	Id   int
 	Name string
@@ -204,6 +206,45 @@ func Info(o interface{}) {
 	}
 }
 
+func SetInfo(o interface{}) {
+	v := reflect.ValueOf(o)
+
+	if v.Kind() == reflect.Ptr && !v.Elem().CanSet() { //判断是否为指针类型 元素是否可以修改
+		fmt.Println("cannot set")
+		return
+	} else {
+		v = v.Elem() //实际取得的对象
+	}
+
+	//判断字段是否存在
+	f := v.FieldByName("Name")
+	if !f.IsValid() {
+		fmt.Println("invalid")
+		return
+	}
+
+	//设置字段
+	if f := v.FieldByName("Name"); f.Kind() == reflect.String {
+		f.SetString("Leo")
+	}
+}
+
+func GetInfo(u interface{}) {
+	v := reflect.ValueOf(u)
+
+	if v.Kind() != reflect.Struct {
+		fmt.Println("type invalid")
+		return
+	}
+
+	get := v.MethodByName("Get")
+	if !get.IsValid() {
+		fmt.Println("Func Get not exist")
+	}
+	res := get.Call([]reflect.Value{})
+	fmt.Println("reflect Call Get", res[0], res[1], res[2])
+}
+
 func main() {
 	if WhatIsThe == 0 {
 		fmt.Println("It's all a lie.")
@@ -215,6 +256,9 @@ func main() {
 		Age:  28,
 	}
 	Info(usr)
+	SetInfo(&usr)
+	fmt.Println("reflect Value Set", usr)
+	GetInfo(usr)
 
 	a := []int{1, 3, 5, 7, 9}
 	sum("1+3+5+7+9=", a[:]...) // here must have the operator ...
