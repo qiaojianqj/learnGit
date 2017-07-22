@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"reflect"
 	"strings"
 	"time"
 )
@@ -22,20 +23,6 @@ func init() {
 	if WhatIsThe == 42 {
 		WhatIsThe = 0
 	}
-}
-
-func main() {
-	if WhatIsThe == 0 {
-		fmt.Println("It's all a lie.")
-	}
-	a := []int{1, 3, 5, 7, 9}
-	sum("1+3+5+7+9=", a[:]...) // here must have the operator ...
-	channelRange()
-	arrayRange()
-	sliceRange()
-	iterVarRange()
-	stringCompare()
-	panicWithRecover()
 }
 
 func sum(s string, args ...int) {
@@ -169,4 +156,73 @@ func zoo() {
 
 func panicWithRecover() {
 	foo()
+}
+
+type User struct {
+	Id   int
+	Name string
+	Age  int
+}
+
+func (u User) String() {
+	fmt.Println(u.Name, u.Id, u.Age)
+}
+
+func (u User) Set(id int, name string, age int) {
+	u.Name = name
+	u.Id = id
+	u.Age = age
+}
+
+func (u User) Get() (int, string, int) {
+	return u.Id, u.Name, u.Age
+}
+
+func Info(o interface{}) {
+	t := reflect.TypeOf(o)           //获取接口的类型
+	fmt.Println("  Type:", t.Name()) //t.Name() 获取接口的名称
+
+	if t.Kind() != reflect.Struct {
+		//通过Kind()来判断反射出的类型是否为需要的类型
+		fmt.Printf("err: type %v invalid!\n", t.Kind())
+		return
+	}
+
+	v := reflect.ValueOf(o) //获取接口的值类型
+	fmt.Println("Fields:")
+
+	for i := 0; i < t.NumField(); i++ { //NumField取出这个接口所有的字段数量
+		f := t.Field(i)                                   //取得结构体的第i个字段
+		val := v.Field(i).Interface()                     //取得字段的值
+		fmt.Printf("%6s: %v = %v\n", f.Name, f.Type, val) //第i个字段的名称,类型,值
+	}
+
+	fmt.Println("Methods:")
+	for i := 0; i < t.NumMethod(); i++ {
+		m := t.Method(i)
+		fmt.Printf("%6s: %v\n", m.Name, m.Type) //获取方法的名称和类型
+	}
+}
+
+func main() {
+	if WhatIsThe == 0 {
+		fmt.Println("It's all a lie.")
+	}
+
+	usr := User{
+		Id:   123,
+		Name: "QiaoJian",
+		Age:  28,
+	}
+	Info(usr)
+
+	a := []int{1, 3, 5, 7, 9}
+	sum("1+3+5+7+9=", a[:]...) // here must have the operator ...
+
+	channelRange()
+	arrayRange()
+	sliceRange()
+	iterVarRange()
+	stringCompare()
+	panicWithRecover()
 }
