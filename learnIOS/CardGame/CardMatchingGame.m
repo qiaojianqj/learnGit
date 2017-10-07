@@ -42,11 +42,11 @@
 
 static const int MISMATCH_PENALTY = 1;
 static const int MATCH_BONUS = 2;
-//static const int COST_TO_CHOSE = 1;
+static const int COST_TO_CHOSE = 1;
 
 -(void) chooseCardAtIndex:(NSUInteger)index {
     //Card* card = self.cards[index];
-    Card* card = [self.cards objectAtIndex:index];
+    Card* card = [self cardAtIndex:index];
     if (!card.isMatched) {
         if (card.isChosen) {
             card.chosen = NO;
@@ -67,7 +67,7 @@ static const int MATCH_BONUS = 2;
                     break;
                 }
             }
-            //self.score -= COST_TO_CHOSE;
+            self.score -= COST_TO_CHOSE;
             card.chosen = YES;
         }
     }
