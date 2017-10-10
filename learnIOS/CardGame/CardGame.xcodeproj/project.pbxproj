@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE98B2191F8BCAA400274A56 /* PlayingCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE98B2181F8BCAA400274A56 /* PlayingCardViewController.m */; };
 		FED680CA1F6EDABC00F222AC /* CardMatchingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = FED680C91F6EDABC00F222AC /* CardMatchingGame.m */; };
 		FEF0B9291F66E60200177B98 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF0B9281F66E60200177B98 /* main.m */; };
 		FEF0B92C1F66E60200177B98 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF0B92B1F66E60200177B98 /* AppDelegate.m */; };
@@ -21,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FE98B2171F8BCAA400274A56 /* PlayingCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayingCardViewController.h; sourceTree = "<group>"; };
+		FE98B2181F8BCAA400274A56 /* PlayingCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayingCardViewController.m; sourceTree = "<group>"; };
 		FED680C81F6EDABC00F222AC /* CardMatchingGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardMatchingGame.h; sourceTree = "<group>"; };
 		FED680C91F6EDABC00F222AC /* CardMatchingGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardMatchingGame.m; sourceTree = "<group>"; };
 		FEF0B9241F66E60200177B98 /* CardGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,6 +79,8 @@
 			children = (
 				FEF0B92D1F66E60200177B98 /* ViewController.h */,
 				FEF0B92E1F66E60200177B98 /* ViewController.m */,
+				FE98B2171F8BCAA400274A56 /* PlayingCardViewController.h */,
+				FE98B2181F8BCAA400274A56 /* PlayingCardViewController.m */,
 				FEF0B9301F66E60200177B98 /* Main.storyboard */,
 				FEF0B9351F66E60200177B98 /* LaunchScreen.storyboard */,
 				FEF0B9381F66E60200177B98 /* Info.plist */,
@@ -186,6 +191,7 @@
 			files = (
 				FEF0B94A1F68289500177B98 /* PlayingCard.m in Sources */,
 				FEF0B9471F681CF600177B98 /* Deck.m in Sources */,
+				FE98B2191F8BCAA400274A56 /* PlayingCardViewController.m in Sources */,
 				FEF0B92F1F66E60200177B98 /* ViewController.m in Sources */,
 				FEF0B92C1F66E60200177B98 /* AppDelegate.m in Sources */,
 				FED680CA1F6EDABC00F222AC /* CardMatchingGame.m in Sources */,

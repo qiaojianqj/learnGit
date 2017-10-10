@@ -7,9 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Deck.h"
 
 @interface ViewController : UIViewController
-
+{
+// instance variables
+@private
+@protected
+@package
+@public
+}
+// public methods
+-(Deck*)createDeck; //usually, not must, abstract method need to be public
 
 @end
 
