@@ -29,7 +29,7 @@ char * mystrcat(char * dest, const char * src)
 
 int main()
 {
-	char *str1 = "what fuck";
+	char *str1 = "what a fuck";
 	char *str2 = (char *)malloc(sizeof(char)*20);
 	char *str3 = (char *)malloc(sizeof(char)*20);
 
@@ -37,7 +37,7 @@ int main()
 	printf("str1: %s, str2: %s\n", str1, str2);
 	printf("str4: %s\n", str4);
 
-    char *str5 = mystrncpy(str3, str1, 4);
+    	char *str5 = mystrncpy(str3, str1, 4);
 	printf("str1: %s, str3: %s\n", str1, str3);
 	printf("str5: %s\n", str5);
 
@@ -46,5 +46,11 @@ int main()
 
 	free(str2);
 	free(str3);
+
+	char dest[] = "Hello,i am!";
+	char source[] = "abc\0def";
+	strncpy(dest, source, 5);
+	printf("dest: %s\n", dest);
+
 	return 0;
 }
