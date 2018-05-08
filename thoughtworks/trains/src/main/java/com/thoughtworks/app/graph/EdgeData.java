@@ -1,5 +1,8 @@
 package com.thoughtworks.app.graph;
 
+/**
+ * EdgeData is used to create a directed graph
+ */
 public class EdgeData {
 	private char start;
 	private char end;

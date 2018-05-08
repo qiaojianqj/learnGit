@@ -1,5 +1,8 @@
 package com.thoughtworks.app.graph;
 
+/**
+ * VertexNode implement a vertex in directed graph
+ */
 public class VertexNode {
 	private  char data;
 	private EdgeNode firstEdge;

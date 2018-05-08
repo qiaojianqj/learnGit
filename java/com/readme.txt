@@ -464,8 +464,18 @@ public class xxoo {
 17. java 反射机制与Class类（每个类（型）都有一个Class对象， 当装载类时，Class类型的对象时由JVM自动创建）
 
 18. java 使用 匿名内部类 可以 实例化一个 抽象类 实例， 或者 实现一个 接口
-    参考 https://www.cnblogs.com/nerxious/archive/2013/01/25/2876489.html
 
+	java 匿名内部类由于不能声明构造方法，可以使用 实例初始化块 完成一些操作
+	例如：双括号初始化：
+	ArrayList<String> list = new ArrayList<>();
+	list.add("first");
+	list.add("second");
+	parser(list);
+	如果在此后不再需要这个ArrayList，则使用匿名内部类+实例初始化块更好
+	parser(new ArrayList<String>() {{ add("first"); add("second");}});
+
+    参考 https://www.cnblogs.com/nerxious/archive/2013/01/25/2876489.html
+	参考 http://www.cnblogs.com/chenpi/p/5507664.html
 #############################################################
 //mysql learning
  centos7 安装mysql 参考 https://www.cnblogs.com/starof/p/4680083.html

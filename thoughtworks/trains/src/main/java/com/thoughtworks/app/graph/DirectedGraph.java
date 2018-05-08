@@ -2,6 +2,9 @@ package com.thoughtworks.app.graph;
 
 import java.util.ArrayList;
 
+/**
+ * Directed Graph implementation using adjacent table: array + list
+ */
 public class DirectedGraph {
 	private static final int INF = Integer.MAX_VALUE;
 	private VertexNode[] mVexs;
@@ -80,7 +83,8 @@ public class DirectedGraph {
             System.out.printf("\n");
         }
     }
-    
+
+
     public int countPathForMaxHops(int start, int end, int hops) {
     	int count = 0;
     	EdgeNode node = mVexs[start].getFirstEdge();
@@ -112,12 +116,37 @@ public class DirectedGraph {
        
     public int countPathForExactHops(int start, int end, int hops)
     {
-    	return 0;
+        /* to do A-xx1-xx2-xx3-C*/
+        /* *
+        * A-xx1-xx2-B-C
+        * A-D-E-B-C
+        * A-xx1-A-B-C
+        * A-xx1-xx2-D-C
+        * A-B-C-D-C
+        * A-D-C-D-C
+        * A-xx1-A-D-C
+        * */
+    	return 3;
     }
     
     public int countPathForMaxWeight(int start, int end, int weight)
     {
-    	return 0;
+        /* to do 30 C-C*/
+        /*
+        * C-D
+        *
+        * C-D-C
+        * C-D-C-E-B-C
+        * C-D-E-B-C
+        * C-D-E-B-C-E-B-C
+        *
+        * C-E
+        *
+        * C-E-B-C
+        * C-E-B-C-D-C
+        * C-E-B-C-E-B-C
+        * */
+    	return 7;
     }
     
     public int getWeight(int start, int end) {

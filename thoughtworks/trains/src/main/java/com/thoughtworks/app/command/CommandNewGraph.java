@@ -35,7 +35,7 @@ public class CommandNewGraph extends AbstractCommand {
         }
         
         App.dG = new DirectedGraph(vexs, edges);
-        //App.dG.print();   //print directed graph to system.out 
+        //App.dG.print();   //print directed graph to system.out
 	}
 	
     private boolean addVertexNode(char vertex) {

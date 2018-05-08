@@ -1,5 +1,8 @@
 package com.thoughtworks.app.graph;
 
+/**
+ * EdgeNode implement a edge in directed graph
+ */
 public class EdgeNode {
 	private int ivex;
 	private int weight;
