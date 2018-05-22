@@ -1,6 +1,9 @@
 package com.thoughtworks.app;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.thoughtworks.app.command.Command;
 import com.thoughtworks.app.command.CommandParser;
 import com.thoughtworks.app.graph.*;
@@ -17,9 +20,25 @@ public class App
         if (args.length == 1) {
             inputFile = new File(args[0]);
         } else {
+            System.out.println (App.class.getResource ( "/" ).getPath ());
             inputFile = new File(App.class.getResource("/graph.txt").toURI());
         }
-  
+        HashMap<String, Object> testMap = new HashMap<> ();
+        testMap.put ( "first", "1" );
+        testMap.put ( "second", "2" );
+        testMap.put ( "three", "3" );
+        testMap.put ( "four", "4" );
+        testMap.put ( "five", "5" );
+        testMap.put ( "six", "6" );
+        testMap.put ( "seven", "7" );
+        /*
+        for (Map.Entry<String, Object> entry : testMap.entrySet ()
+             ) {
+            System.out.println ( "key: " + entry.getKey () + "value: "+ entry.getValue ());
+        }
+       */
+
+        testMap.forEach ( (k, v) -> {System.out.println ("key: " + k + " value: " + v);} );
         CommandParser commandParser = new CommandParser();
         commandParser.addCommand(inputFile);
         commandParser.addCommand("DISTANCE", "A-B-C");
