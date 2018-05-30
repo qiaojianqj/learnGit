@@ -2,7 +2,6 @@ package com.thoughtworks.app;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Map;
 
 import com.thoughtworks.app.command.Command;
 import com.thoughtworks.app.command.CommandParser;
@@ -58,5 +57,26 @@ public class App
         for (final Command eachCommand : commandParser.getCommand()) {
             eachCommand.execute();
         }
+        Thread t1 = new Thread ( new MyRunnable () );
+        Thread t2 = new Thread ( new MyRunnable () );
+        t1.start();
+        t2.start();
     }
 }
+
+class MyRunnable implements Runnable {
+	    public  static  Integer i = new Integer ( 0 );
+	    @Override
+        public void  run() {
+	        while (true) {
+	            synchronized (i) {
+	                if (i < 100) {
+	                    i++;
+	                    System.out.println ( "i = " + i );
+                    } else {
+	                    break;
+                    }
+                }
+            }
+        }
+    }
