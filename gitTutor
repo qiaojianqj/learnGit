@@ -148,7 +148,7 @@ git config --global alias.br branch
 git config --global alias.unstage 'reset HEAD'
 git config --global alias.last 'log -1'
 
-#ignore some special file
+#ignore some special files
 #create a file named .gitignore under the root git dir
 #then add the wana ignoring file name to the file
 #for example
@@ -171,4 +171,4 @@ deploy_key_rsa
 #two tools
 #Gitosis: manage ssh pub key
 #Gitolite: manage access permission
-
+  
