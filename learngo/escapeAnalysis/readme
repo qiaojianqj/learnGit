@@ -1,0 +1,11 @@
+mkdir escapeAnalysis
+cd escapeAnalysis
+vi stream.go
+go run stream.go
+vi stream_test.go
+go test -run none -bench AlgorithmOne -benchtime 3s -benchmem
+go test -run none -bench AlgorithmTwo -benchtime 3s -benchmem
+go test -run none -bench AlgorithmOne -benchtime 3s -benchmem -memprofile mem.out
+go tool pprof -alloc_space escapeAnalysis.test mem.out
+	list algOne
+go build -gcflags "-m -m"
