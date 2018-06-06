@@ -330,7 +330,13 @@
 
 30. 设置数据库的当前日志归档模式为归档模式
 
+> shutdown immediate;
+>
+> startup mount;
+>
 > alter database archivelog;
+>
+> alter database open;
 
 31. 查看归档日志文件的保存位置
 
@@ -502,7 +508,7 @@
 >>> 2. sqlplus / as sysdba
 >>> 3. CREATE USER rman IDENTIFIED BY rman;
 >>> 4. GRANT RECOVERY_CATALOG_OWNER TO rman;
->>> 5. rman target / catalog rman/rman@qiaojian;
+>>> 5. rman target system/nocatalog
 
 53. 闪回（flashback）: 实现数据的迅速恢复而不依赖于数据备份
 
@@ -529,6 +535,139 @@
 >flashback table flash_table01 to timestamp to_timestamp('2018-06-05 16:43:13', 'yyyy-mm-dd hh24:mi:ss');
 >
 >select * from flash_table01;
+
+***
+
+RMAN Component
+
+> RMAN Executable: rman
+>
+> Target Database: 目标数据库
+>
+> RMAN Repository: RMAN资料档案库，存放RMAN使用到的管理信息和数据。RMAN资料档案库可以保存在目标数据库的控制文件中（默认，此时Oracle建议将控制文件配置为自动备份[RMAN> configure controlfile autobackup on;]），也可以保存在RMAN恢复目录中。
+>
+> RMAN Recover Catalog: RMAN恢复目录， 可选组件，它被存放在另外一个独立的Oracle数据库中。
+>
+> Media Management Subsystem: 介质管理子系统，RMAN利用此组件将目标数据库备份到其他存储设备中去
+>
+> Standy Database: 备用数据库，是对目标数据库的一个精确复制
+
+RMAN Configure
+
+>查看当前默认配置：show all;
+>
+>分配通道：
+>
+>>1. 手动分配：run { allocate channel ch1 device type disk; format=‘/xx’; backup xx;}
+>>2. 自动分配：在run命令块外面执行backup，restore，delete；在run命令块内部执行backup等命令前未使用allocate channel手动分配通道
+>
+>通道参数配置
+>
+>>filesperset：限制多少个文件备份成一个备份集
+>>
+>>connect：设置连接到的数据库实例
+>>
+>>format：设置备份文件的存储格式以及备份文件的存储目录
+>>
+>>rate：设置通道的I/O速率
+>>
+>>maxsetsize：设置备份集的最大尺寸
+>>
+>>maxpiecesize：设置备份片的最大尺寸
+>>
+>>optimization：开启或关闭优化
+
+在当前数据库创建恢复目录：
+
+> \# sqlplus / as sysdba
+>
+> SQL> create tablespace rman_tbs datafile '/u01/app/oracle/oradata/qiaojian/rman_tbs.dbf' size 125m autoextend on next 50m maxsize 500m;
+>
+> SQL> create user rman identified by rman default tablespace rman_tbs temporay tablespace temp;
+>
+> SQL> grant connect, resource to rman;
+>
+> SQL> grant recovery_catalog_owner to rman;
+>
+> SQL> exit
+>
+> \# rman
+>
+> RMAN> connect catalog rman/rman
+>
+> RMAN> create catalog;
+
+连接到当前目标数据库
+
+> 1. 
+>
+> \# rman target / catalog rman/rman@qiaojian;
+>
+> RMAN> register database;
+>
+> 2. 
+>
+> \# rman target  sys/123456@qiaojian;
+>
+> RMAN> connect catalog rman/rman@qiaojian;
+>
+> RMAN> register database;
+>
+> RMAN> resync catalog;
+>
+> RMAN> list incarnation;
+>
+> RMAN> reset database;
+>
+> RMAN> resync catalog;
+
+完全备份
+
+> 1. 配置参数
+>
+> RMAN> configure retention policy to recovery  windows of 7 days;
+>
+> RMAN> configure default device type to disk;
+>
+> RMAN> configure controlfile autobackup on;
+>
+> RMAN> configure channel device type disk format '/u01/oracle/oradata/qiaojian/backup/%d_DB_%u_%s_%p';
+>
+> 2. 执行全备命令
+>
+> RMAN> run {
+>
+> allocate channel ch1 type disk format '/home/oracle/qiaojian/backup/db_t%t_s%s_p%p';
+>
+> backup full database tag full_db_backup plus archivelog;  
+>
+> release channel ch1;
+>
+> }
+
+查看建立的备份集与备份片信息
+
+> RMAN> list backup of database;
+
+数据库归档模式恢复
+
+>1. 确认数据库处于归档模式，启动RMAN连接到目标数据库，备份整个数据库
+>
+>   > configure channel device type disk format '/u01/oradata/qiaojian/backup/%d\_db\_%t\_%s\_%p';
+>   >
+>   > backup database tag qiao_full_bak plus archivelog;
+>
+>2. 模拟故障，删除数据文件user01.dbf
+>
+>3. 运行以下命令恢复
+>
+>> RMAN> restore database;
+
+
+
+
+
+
 
 
 
