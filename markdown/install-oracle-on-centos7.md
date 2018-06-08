@@ -182,6 +182,8 @@
 
 0. 设置显示列的格式
 
+>set linesize 200;
+>
 >column fieldxx format a20;
 
 1. 查询oracle中的用户信息
@@ -532,7 +534,7 @@
 >
 >alter table flash_table01 enable row movement;
 >
->flashback table flash_table01 to timestamp to_timestamp('2018-06-05 16:43:13', 'yyyy-mm-dd hh24:mi:ss');
+>flashback table flash_table01 to timestamp to_timestamp('2018-06-08 11:16:06', 'yyyy-mm-dd hh24:mi:ss');
 >
 >select * from flash_table01;
 
@@ -653,17 +655,85 @@ RMAN Configure
 
 >1. 确认数据库处于归档模式，启动RMAN连接到目标数据库，备份整个数据库
 >
->   > configure channel device type disk format '/u01/oradata/qiaojian/backup/%d\_db\_%t\_%s\_%p';
+>   > \# rman target / nocatalog
 >   >
->   > backup database tag qiao_full_bak plus archivelog;
+>   > RMAN> configure channel device type disk format 
+>   >
+>   > RMAN> '/u01/oradata/qiaojian/backup/%d\_db\_%t\_%s\_%p';
+>   >
+>   > RMAN> backup database tag qiao_full_bak plus archivelog;
 >
 >2. 模拟故障，删除数据文件user01.dbf
 >
 >3. 运行以下命令恢复
 >
+>> \# rman target / nocatalog
+>>
+>> RMAN> startup mount;
+>>
 >> RMAN> restore database;
 
 
+
+~~~
+kill -9 ora_pmon_xxsid
+rman target /
+~~~
+
+~~~
+RMAN> run {
+startup mount;
+set until scn 1120000;
+restore database;
+recover database;
+alter database open resetlogs;
+}
+~~~
+
+~~~
+1. RMAN> CONFIGURE CONTROLFILE AUTOBACKUP ON;
+2. RMAN> backup database plus archivelog tag qiaojiantest;(记录dbid：2275815882从备份controlfile文件的output)
+3. 删除数据库的datafile、controlfile、redologfile
+4. kill -9 ora_pmon_test
+5. rman target /
+6. RMAN> startup nomount;
+7. RMAN> set dbid 2275815882;
+8. RMAN> restore controlfile from autobackup; （从output：AUTOBACKUP found: c-2275815882-20180607-00可知autobackup的controlfile是通过bdid来匹配的）
+9. RMAN> startup mount;
+10.RMAN> restore database;
+11.SQL> alter database open resetlogs;
+~~~
+
+~~~
+image copy 1:
+# rman
+RMAN> connect target /
+RMAN> backup as copy database;
+RMAN> list copy of database;
+RMAN> backup as copy current controlfile;
+RMAN> backup as copy archivelog all;
+
+image copy 2:
+RMAN> copy
+2> datafile 1 to '/u01/oradata/test/backup/dbf_1.cpy',
+3> datafile 2 to '/u01/oradata/test/backup/dbf_2.cpy',
+4> datafile 3 to '/u01/oradata/test/backup/dbf_3.cpy',
+5> datafile 4 to '/u01/oradata/test/backup/dbf_4.cpy',
+6> current controlfile to '/u01/oradata/test/backup/cf_cpy';
+
+image copy 3:
+RMAN> copy level=0
+2> datafile 1 to '/u01/oradata/test/backup/dbf_1.cpy',
+3> datafile 2 to '/u01/oradata/test/backup/dbf_2.cpy',
+4> datafile 3 to '/u01/oradata/test/backup/dbf_3.cpy',
+5> datafile 4 to '/u01/oradata/test/backup/dbf_4.cpy';
+
+incremental_update:
+RMAN> run {
+2> backup incremental level 1 for recover of copy with tag 'incr_update' database;
+3> recover copy of database with tag 'incr_update';
+4> }
+~~~
 
 
 
