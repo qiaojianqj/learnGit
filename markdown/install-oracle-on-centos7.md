@@ -733,6 +733,8 @@ RMAN> run {
 2> backup incremental level 1 for recover of copy with tag 'incr_update' database;
 3> recover copy of database with tag 'incr_update';
 4> }
+
+create user test identified by test default tablespace qiaojian;
 ~~~
 
 

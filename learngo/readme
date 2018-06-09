@@ -16,3 +16,11 @@ OO 语言最重要的三个方面分别是：封装，继承和多态，在 Go �
 
 3. Go中的引用类型:
 	reference types: slices, maps, channels, pointers, functions
+
+4. Go内存逃逸：
+   https://studygolang.com/articles/12994
+
+5. go tool pprof：对CPU、堆内存、goroutine 阻塞事件进行记录分析；
+   https://github.com/hyper0x/go_command_tutorial/blob/master/0.12.md
+
+
