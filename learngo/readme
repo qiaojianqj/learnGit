@@ -23,4 +23,6 @@ OO 语言最重要的三个方面分别是：封装，继承和多态，在 Go �
 5. go tool pprof：对CPU、堆内存、goroutine 阻塞事件进行记录分析；
    https://github.com/hyper0x/go_command_tutorial/blob/master/0.12.md
 
+6. Mac 下编译 Linux 64位可执行程序 
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go
 
