@@ -31,6 +31,9 @@ git commit -m "comments messages"
 git log 
 git log --pretty=oneline
 
+#git 查看某个 commit 的改动
+git show 236f48e
+
 #display the git command you have executed on the repository
 git reflog
 

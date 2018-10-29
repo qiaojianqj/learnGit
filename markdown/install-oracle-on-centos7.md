@@ -140,7 +140,7 @@
 >
 > export DISPLAY=:0.0
 >
-> xhost+
+> xhost +
 >
 > su - oracle
 >

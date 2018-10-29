@@ -1,12 +1,15 @@
 package  quickStart;
 
+import org.omg.CORBA.IntHolder;
+
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
+
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String... args) throws Exception {
 
         /*
         int a;
@@ -14,7 +17,24 @@ public class Main {
             int a;// redefine
         }
         */
+        //assert false;
+        Test.testEnumEqual ();
 
+        Integer integer = 1;
+        Test.triple1 ( integer );
+        System.out.println ( integer );
+        IntHolder intHolder = new IntHolder ( 1 );
+        Test.triple2 ( intHolder );
+        System.out.println ( intHolder.value );
+
+        Test.print ();
+
+        Test.testInteger ();
+
+        Test.testInnerClass ( "qiaojian" );
+/*
+
+ */
         String str = "♥️ haha";
         char ch = str.charAt ( 1 );
         System.out.println ( "charAt str.1: " + ch + ", length of str: " + str.length () );
@@ -26,15 +46,22 @@ public class Main {
 
         int valInt = 1<<35;
         System.out.println ( valInt);
+/*
 
+ */
         System.out.println ( new File ( "." ).getAbsolutePath ());
 
         System.out.println("getResource: " + Main.class.getResource("").getPath ());
         System.out.println("getResource/: " + Main.class.getResource("/").getPath ());
+        String path = Main.class.getResource("/").getPath ();
+        String rootpath = new File(path).getParentFile().getParentFile().getCanonicalPath();
+        System.out.println ( "root path: " + rootpath );
 
         System.out.println("getClassLoader.getResource: " + Main.class.getClassLoader().getResource(""));
         System.out.println("getClassLoader.getResource/:" + Main.class.getClassLoader().getResource("/"));
+/*
 
+ */
         //RandomAccessFile aFile = new RandomAccessFile ( "./target/classes/nio-data.txt","rw" );
         RandomAccessFile aFile = new RandomAccessFile ( Main.class.getResource ( "/nio-data.txt" ).getFile (),"rw" );
         FileChannel inChannel = aFile.getChannel ();
@@ -51,5 +78,9 @@ public class Main {
             bytesRead = inChannel.read ( buf );
         }
         aFile.close ();
+/*
+
+ */
+        //TestLog.logInSwing ();
     }
 }
