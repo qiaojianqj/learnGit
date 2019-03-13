@@ -40,6 +40,58 @@
 > 在 C++ 中， 可以在嵌套的块中重定义一个变量。 在内层定义的变量会覆盖在外层定义的变量。 但是，在java中不允许嵌套块中重定义外层的变量。
 >
 > 在 Java 中， 允许数组长度为 0。 在 Java 中， 允许将一个数组变量拷贝给 另一个数组变量。这时， 两个变量将引用同 一个数组。如果希望将 一个数组的所有值拷贝到一个新的数组中去， 就要使用 Arrays 类的 copyOf 方法。可以通过二维数组创建不规则数组（先创建行，再单独创建每行的数组）
+>
+> ~~~java
+> //浮点数默认为双精度的（double）
+> //float i = 1.1;
+> float i = (float) 1.1;
+> 
+> short j = 1;
+> //整型默认为int
+> //j = j + 1;
+> // += 运算自动向下转型 int -> short
+> j += 1;
+> 
+> //不使用临时变量交换两个整数的值
+> //方法1. 使用异或操作swap a 和 b 的值
+> int a = 456;
+> int b = 123;
+> a = a ^ b;
+> b = a ^ b;
+> a = a ^ b;
+> System.out.println ( a ); //123
+> System.out.println ( b ); //456
+> 
+> //方法2. 使用加减法运算
+> int a = 123;
+> int b = 456;
+> a = a + b;
+> b = a - b;
+> a = a - b;
+> System.out.println ( a );
+> System.out.println ( b );
+> 
+> //编译时能确定的String对象都放入常量池
+> //运行时才能确定或者new出的String对象都放入堆
+> String str1 = "I am String1"; //变量str1引用指向字符串常量池
+> final String str2 = "I am String"; //final修饰，str2是编译期常量
+> String str3 = "I am String"; //变量str3引用指向字符串常量池
+> String str4 = str2 + 1; // str2 + 1 得到的也是个常量，放在常量池
+> String str5 = str3 + 1; // str3 + 1 得到的是个变量，放在堆上 （因为str3变量在运行时才可以取到它所引用的值）
+> System.out.println ( str1 == str4 );
+> System.out.println ( str1 == str5 );
+> 
+> //try语句带return，finally执行时机
+> try {
+>     if (a == 123) {
+>         System.out.println ( "in try return a = " + a );
+>         return; // 执行到此处，记录return的值，然后执行finally代码块，再然后return
+>     }
+> } finally {
+>     a = 1234;
+>     System.out.println ( "in finally a = " + a );
+> }
+> ~~~
 
 ### 类与对象
 
@@ -721,62 +773,67 @@ synchronized 优化实现与（偏向锁、轻量级锁、重量级锁）
 ### Java 泛型方法与可变参数的bug：反编译查看类型转换的错误
 
 >  ~~~java
-> public static void main(String[] args) {
+>  public static void main(String[] args) {
 >         test ( arg() );
 >     }
-> 
+>  
 >     public static void test(Object... args) {
 >         System.out.println ( args );
 >     }
-> 
->     public static <T> T arg() {
->         return (T) "df";
->     }
+>  
+>     //error
+>     //public static <T> T arg() {
+>     //    return (T) "df"; 
+>     //}
+>  
+>  	public static <T> T[] arg(T... t) {
+>          return t;
+>      }
 >     
 >     //反编译后的代码：
 >     
 >     public static void main(String[] args) {
 >         test ((Object[]) arg() ); //此处会报类型转换的错
 >     }
-> 
+>  
 >     public static void test(Object... args) {
 >         System.out.println ( args );
 >     }:
-> 
+>  
 >     public static Object arg() {
 >         return "df";
 >     }
-> 
-> 	/************************/
-> 
+>  
+>  	/************************/
+>  
 >     public static void main(String[] args) {
-> 		System.out.println((Object) args);
+>  		System.out.println((Object) args);
 >         test ( arg() );
 >     }
-> 
+>  
 >     public static void test(Object... args) {
 >         System.out.println ( args );
 >     }
-> 
+>  
 >     public static String arg() {
 >         return  "df";
 >     }
-> 
-> 	//反编译后的代码：
-> 
-> 	public static void main(String args[])
+>  
+>  	//反编译后的代码：
+>  
+>  	public static void main(String args[])
 >     {
 >         System.out.println(args);
 >         test(new Object[] {
 >             arg()
 >         });
 >     }
-> 
+>  
 >     public static transient void test(Object aobj[])
 >     {
 >         System.out.println(((Object) (aobj)));
 >     }
-> 
+>  
 >     public static String arg()
 >     {
 >         return "df";
