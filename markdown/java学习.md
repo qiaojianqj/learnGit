@@ -907,4 +907,205 @@ synchronized 优化实现与（偏向锁、轻量级锁、重量级锁）
 > Synchronized是Java语言特性上的同步，更简洁，适用范围广
 >
 > ReentrantLock是可定制的锁机制，提供了Synchronized没有的特性，比如Condition，可中断获取锁，timeout获取锁，公平获取锁。
+>
+> 
+>
+> **final** 关键字保证变量在构造阶段完成初始化，符合**可见性**，但是final的引用类型，要保证线程安全，仍需要同步
+>
+> ~~~java
+>     //多线程下对list的读写不是线程安全的
+> 	public static final List<String> strList = new ArrayList<> ( );
+> 
+>     public static void main(String[] args) {
+>         for (int i = 0; i < 20; i++) {
+>             if (i % 2 == 0) {
+>                 int finalI = i;
+>                 new Thread ( () -> {
+>                     System.out.println ( "Thread: " + Thread.currentThread ().getName () );
+>                     strList.add ( finalI + "" );
+>                 } ).start ();
+>             } else {
+>                new Thread ( () -> {
+>                    for (String str: strList
+>                         ) {
+>                       System.out.println ("Thread: " + Thread.currentThread ().getId () + "; strList member: " + str );
+>                    }
+>                } ).start ();
+>             }
+>         }
+>     }
+> ~~~
+>
+> 
 
+
+
+### 线程安全的单例模式
+
+> 1. 饿汉模式：在类构造阶段就完成实例的创建，可以保证线程安全
+>
+>    ~~~java
+>    
+>    public class MySingleton {
+>    	
+>    	private static MySingleton instance = new MySingleton();
+>    	
+>    	private MySingleton(){}
+>    	
+>    	public static MySingleton getInstance() {
+>    		return instance;
+>    	}
+>    	
+>    }
+>    ~~~
+>
+>    
+>
+> 2. 懒汉模式：方法块加Synchronized关键字，或者使用DCL（Double Check Locking）+ volatile 模式
+>
+>    ~~~java
+>    
+>    public class MySingleton {
+>    	
+>    	private static MySingleton instance = null;
+>    	
+>    	private MySingleton(){}
+>    	//方法块加synchronized关键字
+>    	public synchronized static MySingleton getInstance() {
+>    		try { 
+>    			if(instance == null){
+>    				instance = new MySingleton();
+>    			}
+>    		} catch (InterruptedException e) { 
+>    			e.printStackTrace();
+>    		}
+>    		return instance;
+>    	}
+>    }
+>    ~~~
+>
+>    ~~~java
+>    
+>    public class MySingleton {
+>    	
+>    	private volatile static MySingleton instance = null;
+>    	
+>    	private MySingleton(){}
+>    	//DCL + volatile
+>    	public synchronized static MySingleton getInstance() {
+>    		try { 
+>    			if(instance == null){
+>                    synchronized(MySingleton.class) {
+>                        if(instance == null) {
+>    						instance = new MySingleton();
+>                        }
+>                    }
+>    			}
+>    		} catch (InterruptedException e) { 
+>    			e.printStackTrace();
+>    		}
+>    		return instance;
+>    	}
+>    }
+>    ~~~
+>
+>    
+>
+> 3. 静态内部类模式：利用虚拟机类初始化机制（什么情况下才会去加载初始化一个类？类的主动引用时）保证延迟初始化且线程安全
+>
+>    ~~~java
+>    public class MySingleton {
+>    	
+>    	//内部类
+>    	private static class MySingletonHandler{
+>    		private static MySingleton instance = new MySingleton();
+>    	} 
+>    	
+>    	private MySingleton(){}
+>    	 
+>    	public static MySingleton getInstance() { 
+>    		return MySingletonHandler.instance;
+>    	}
+>    }
+>    ~~~
+>
+>    
+>
+> 4. 枚举：枚举在语言层面保证了创建一个enum类型是线程安全的
+>
+>    ~~~java
+>    public enum Singleton {
+>        INSTANCE;
+>    }
+>    ~~~
+>
+> But, Sping框架的单例模式实现是使用**单例注册表**的方式：
+>
+> ~~~java
+> public class SingletonReg {
+>     private final static Map<String, Object> singletonObjects = new ConcurrentHashMap<String, Object>();
+> 
+>     static {
+>         SingletonReg singletonReg = new SingletonReg();
+>     }
+> 
+>     private SingletonReg() {}
+> 
+>     public static SingletonReg getInstance(String name) {
+>         if (name == null) {
+>             name = "com.lianggzone.designpattern.singleton.sample.SingletonReg";
+>         }
+>         if (singletonObjects.get(name) == null) {
+>             try {
+>                 singletonObjects.put(name, Class.forName(name).newInstance());
+>             } catch (Exception ex) {
+>                 ex.printStackTrace();
+>             }
+>         }
+>         return (SingletonReg) singletonObjects.get(name);
+>     }
+> }
+> ~~~
+>
+> 
+
+
+
+### Java 引用 
+
+Strong Reference、 SoftReference、WeakReference、PhantomReference、FinalReference
+
+FinalReference：有实现finalize方法的类的对象会被封装成Finalizer，然后被注册到Finalizer链表中，Finalizer类静态初始化时会启动FinalizerThread线程，此线程会在对象被回收前，遍历ReferenceQueue，然后执行相应的finalize方法
+
+
+
+DirectByteBuffer 自动内存回收（Cleaner extends PhantomReference）：
+
+DirectByteBuffer在初始化的时候通过Cleaner.create(this, new Deallocator())将DirectByteBuffer加入虚引用的对象，这样在DirectByteBuffer被回收时，相应的虚引用Cleaner会被加入ReferenceQueue，然后静态启动的ReferenceHandler会遍历ReferenceQueue，取出对应的虚引用Cleaner，调用Cleaner的clean方法，clean方法会启动Deallocator线程去释放堆外内存。
+
+But，这种依赖于GC回收DirectByteBuffer来回收堆外内存的方式，会导致堆外内存回收不及时，因为DirectByteBuffer是在堆内内存分配，依赖于JVM的GC，不确定性大。
+
+因此，Netty使用自己的策略（内存池+引用计数）来回收堆外内存。
+
+
+
+Netty高性能IO主要特性：
+
+1. 基于Java NIO 封装，NIO基于Linux epoll
+2. Reactor线程模型
+3. 使用DirectByteBuffer分配堆外内存进行socket读写
+4. 使用内存池+引用计数来管理内存（堆外+堆内）的分配和释放，避免堆内内存的频繁GC和堆外内存的回收不及时
+
+### Msql  innodb myisam
+
+myisam: 表级锁，不支持事务，不支持外键，崩溃后无法安全恢复，适合查询比较多的场景
+
+innodb：行级锁，支持事务，支持外键，自动崩溃恢复，适合增删改比较多的场景
+
+
+
+### Java Stream parallelStream
+
+
+
+### Hibernate & Mybatis
