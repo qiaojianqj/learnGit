@@ -1,0 +1,127 @@
+
+test:	file format Mach-O 64-bit x86-64
+
+Disassembly of section __TEXT,__text:
+__text:
+100000e1f:	55 	pushq	%rbp
+100000e20:	48 89 e5 	movq	%rsp, %rbp
+100000e23:	48 83 ec 10 	subq	$16, %rsp
+100000e27:	c7 45 fc 08 00 00 00 	movl	$8, -4(%rbp)
+100000e2e:	c7 45 f8 05 00 00 00 	movl	$5, -8(%rbp)
+100000e35:	8b 55 f8 	movl	-8(%rbp), %edx
+100000e38:	8b 45 fc 	movl	-4(%rbp), %eax
+100000e3b:	89 d6 	movl	%edx, %esi
+100000e3d:	89 c7 	movl	%eax, %edi
+100000e3f:	b8 00 00 00 00 	movl	$0, %eax
+100000e44:	e8 65 00 00 00 	callq	101 <_sub>
+100000e49:	89 c6 	movl	%eax, %esi
+100000e4b:	48 8d 3d ae 00 00 00 	leaq	174(%rip), %rdi
+100000e52:	b8 00 00 00 00 	movl	$0, %eax
+100000e57:	e8 74 00 00 00 	callq	116
+100000e5c:	8b 55 f8 	movl	-8(%rbp), %edx
+100000e5f:	8b 45 fc 	movl	-4(%rbp), %eax
+100000e62:	89 d6 	movl	%edx, %esi
+100000e64:	89 c7 	movl	%eax, %edi
+100000e66:	b8 00 00 00 00 	movl	$0, %eax
+100000e6b:	e8 1a 00 00 00 	callq	26 <_add>
+100000e70:	89 c6 	movl	%eax, %esi
+100000e72:	48 8d 3d 93 00 00 00 	leaq	147(%rip), %rdi
+100000e79:	b8 00 00 00 00 	movl	$0, %eax
+100000e7e:	e8 4d 00 00 00 	callq	77
+100000e83:	b8 00 00 00 00 	movl	$0, %eax
+100000e88:	c9 	leave
+100000e89:	c3 	retq
+100000e8a:	55 	pushq	%rbp
+100000e8b:	48 89 e5 	movq	%rsp, %rbp
+100000e8e:	48 83 ec 10 	subq	$16, %rsp
+100000e92:	89 7d fc 	movl	%edi, -4(%rbp)
+100000e95:	89 75 f8 	movl	%esi, -8(%rbp)
+100000e98:	48 8d 3d 79 00 00 00 	leaq	121(%rip), %rdi
+100000e9f:	e8 32 00 00 00 	callq	50
+100000ea4:	8b 55 fc 	movl	-4(%rbp), %edx
+100000ea7:	8b 45 f8 	movl	-8(%rbp), %eax
+100000eaa:	01 d0 	addl	%edx, %eax
+100000eac:	c9 	leave
+100000ead:	c3 	retq
+100000eae:	55 	pushq	%rbp
+100000eaf:	48 89 e5 	movq	%rsp, %rbp
+100000eb2:	48 83 ec 10 	subq	$16, %rsp
+100000eb6:	89 7d fc 	movl	%edi, -4(%rbp)
+100000eb9:	89 75 f8 	movl	%esi, -8(%rbp)
+100000ebc:	48 8d 3d 5d 00 00 00 	leaq	93(%rip), %rdi
+100000ec3:	e8 0e 00 00 00 	callq	14
+100000ec8:	8b 45 fc 	movl	-4(%rbp), %eax
+100000ecb:	2b 45 f8 	subl	-8(%rbp), %eax
+100000ece:	c9 	leave
+100000ecf:	c3 	retq
+
+_main:
+100000e1f:	55 	pushq	%rbp
+100000e20:	48 89 e5 	movq	%rsp, %rbp
+100000e23:	48 83 ec 10 	subq	$16, %rsp
+100000e27:	c7 45 fc 08 00 00 00 	movl	$8, -4(%rbp)
+100000e2e:	c7 45 f8 05 00 00 00 	movl	$5, -8(%rbp)
+100000e35:	8b 55 f8 	movl	-8(%rbp), %edx
+100000e38:	8b 45 fc 	movl	-4(%rbp), %eax
+100000e3b:	89 d6 	movl	%edx, %esi
+100000e3d:	89 c7 	movl	%eax, %edi
+100000e3f:	b8 00 00 00 00 	movl	$0, %eax
+100000e44:	e8 65 00 00 00 	callq	101 <_sub>
+100000e49:	89 c6 	movl	%eax, %esi
+100000e4b:	48 8d 3d ae 00 00 00 	leaq	174(%rip), %rdi
+100000e52:	b8 00 00 00 00 	movl	$0, %eax
+100000e57:	e8 74 00 00 00 	callq	116
+100000e5c:	8b 55 f8 	movl	-8(%rbp), %edx
+100000e5f:	8b 45 fc 	movl	-4(%rbp), %eax
+100000e62:	89 d6 	movl	%edx, %esi
+100000e64:	89 c7 	movl	%eax, %edi
+100000e66:	b8 00 00 00 00 	movl	$0, %eax
+100000e6b:	e8 1a 00 00 00 	callq	26 <_add>
+100000e70:	89 c6 	movl	%eax, %esi
+100000e72:	48 8d 3d 93 00 00 00 	leaq	147(%rip), %rdi
+100000e79:	b8 00 00 00 00 	movl	$0, %eax
+100000e7e:	e8 4d 00 00 00 	callq	77
+100000e83:	b8 00 00 00 00 	movl	$0, %eax
+100000e88:	c9 	leave
+100000e89:	c3 	retq
+
+_add:
+100000e8a:	55 	pushq	%rbp
+100000e8b:	48 89 e5 	movq	%rsp, %rbp
+100000e8e:	48 83 ec 10 	subq	$16, %rsp
+100000e92:	89 7d fc 	movl	%edi, -4(%rbp)
+100000e95:	89 75 f8 	movl	%esi, -8(%rbp)
+100000e98:	48 8d 3d 79 00 00 00 	leaq	121(%rip), %rdi
+100000e9f:	e8 32 00 00 00 	callq	50
+100000ea4:	8b 55 fc 	movl	-4(%rbp), %edx
+100000ea7:	8b 45 f8 	movl	-8(%rbp), %eax
+100000eaa:	01 d0 	addl	%edx, %eax
+100000eac:	c9 	leave
+100000ead:	c3 	retq
+
+_sub:
+100000eae:	55 	pushq	%rbp
+100000eaf:	48 89 e5 	movq	%rsp, %rbp
+100000eb2:	48 83 ec 10 	subq	$16, %rsp
+100000eb6:	89 7d fc 	movl	%edi, -4(%rbp)
+100000eb9:	89 75 f8 	movl	%esi, -8(%rbp)
+100000ebc:	48 8d 3d 5d 00 00 00 	leaq	93(%rip), %rdi
+100000ec3:	e8 0e 00 00 00 	callq	14
+100000ec8:	8b 45 fc 	movl	-4(%rbp), %eax
+100000ecb:	2b 45 f8 	subl	-8(%rbp), %eax
+100000ece:	c9 	leave
+100000ecf:	c3 	retq
+Disassembly of section __TEXT,__stubs:
+__stubs:
+100000ed0:	ff 25 3a 01 00 00 	jmpq	*314(%rip)
+100000ed6:	ff 25 3c 01 00 00 	jmpq	*316(%rip)
+Disassembly of section __TEXT,__stub_helper:
+__stub_helper:
+100000edc:	4c 8d 1d 25 01 00 00 	leaq	293(%rip), %r11
+100000ee3:	41 53 	pushq	%r11
+100000ee5:	ff 25 15 01 00 00 	jmpq	*277(%rip)
+100000eeb:	90 	nop
+100000eec:	68 00 00 00 00 	pushq	$0
+100000ef1:	e9 e6 ff ff ff 	jmp	-26 <__stub_helper>
+100000ef6:	68 0e 00 00 00 	pushq	$14
+100000efb:	e9 dc ff ff ff 	jmp	-36 <__stub_helper>

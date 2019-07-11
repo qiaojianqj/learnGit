@@ -890,6 +890,8 @@ synchronized 优化实现与（偏向锁、轻量级锁、重量级锁）
 > ThreadLocalMap 的 Entry 对 ThreadLocal 的引用为弱引用，避免了 ThreadLocal 对象无法被回收的问题
 > ThreadLocalMap 的 set 方法通过调用 replaceStaleEntry 方法回收键为 null 的 Entry 对象的值（即为具体实例）以及 Entry 对象本身从而防止内存泄漏
 > ThreadLocal 适用于变量在线程间隔离且在方法间共享的场景
+> 
+> ThreadLocal 内存泄漏问题？？？？
 > ~~~
 >
 > 
@@ -913,27 +915,27 @@ synchronized 优化实现与（偏向锁、轻量级锁、重量级锁）
 > **final** 关键字保证变量在构造阶段完成初始化，符合**可见性**，但是final的引用类型，要保证线程安全，仍需要同步
 >
 > ~~~java
->     //多线程下对list的读写不是线程安全的
+>  //多线程下对list的读写不是线程安全的
 > 	public static final List<String> strList = new ArrayList<> ( );
 > 
->     public static void main(String[] args) {
->         for (int i = 0; i < 20; i++) {
->             if (i % 2 == 0) {
->                 int finalI = i;
->                 new Thread ( () -> {
->                     System.out.println ( "Thread: " + Thread.currentThread ().getName () );
->                     strList.add ( finalI + "" );
->                 } ).start ();
->             } else {
->                new Thread ( () -> {
->                    for (String str: strList
->                         ) {
->                       System.out.println ("Thread: " + Thread.currentThread ().getId () + "; strList member: " + str );
->                    }
->                } ).start ();
->             }
->         }
->     }
+>  public static void main(String[] args) {
+>      for (int i = 0; i < 20; i++) {
+>          if (i % 2 == 0) {
+>              int finalI = i;
+>              new Thread ( () -> {
+>                  System.out.println ( "Thread: " + Thread.currentThread ().getName () );
+>                  strList.add ( finalI + "" );
+>              } ).start ();
+>          } else {
+>             new Thread ( () -> {
+>                 for (String str: strList
+>                      ) {
+>                    System.out.println ("Thread: " + Thread.currentThread ().getId () + "; strList member: " + str );
+>                 }
+>             } ).start ();
+>          }
+>      }
+>  }
 > ~~~
 >
 > 
@@ -992,7 +994,7 @@ synchronized 优化实现与（偏向锁、轻量级锁、重量级锁）
 >    	
 >    	private MySingleton(){}
 >    	//DCL + volatile
->    	public synchronized static MySingleton getInstance() {
+>    	public static MySingleton getInstance() {
 >    		try { 
 >    			if(instance == null){
 >                    synchronized(MySingleton.class) {
@@ -1109,3 +1111,6 @@ innodb：行级锁，支持事务，支持外键，自动崩溃恢复，适合�
 
 
 ### Hibernate & Mybatis
+
+
+
