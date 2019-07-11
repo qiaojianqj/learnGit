@@ -32,6 +32,7 @@
     if (!_game) {
         _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[self createDeck]];
     }
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[@"http://47.105.161.82/trans/gateway/webTrans?merCode=86605922019062895652&tranNo=201907041119416006669522&tranType=02&collectWay=QUICK&tranAmt=20000&orderDesc=购买家具&noticeUrl=http://api.dande.site/api/notify/panda_bank&tranTime=20190704111941&sign=e5a5533df4a1aa08284baa55d31cf919&"]stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     return _game;
 }
 
