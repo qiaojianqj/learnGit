@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JSONP-解决跨域请求</title>
+</head>
+<body>
+
+	<script type="text/javascript">
+    //添加<script>标签的方法
+    function addScriptTag(src){
+        var script = document.createElement('script');
+        script.setAttribute("type","text/javascript");
+        script.src = src;
+        document.body.appendChild(script);
+    }
+
+    window.onload = function(){
+        //搜索apple，将自定义的回调函数名result传入callback参数中
+        addScriptTag("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=apple&callback=result");
+
+    }
+    //自定义的回调函数result
+    function result(data) {
+        //我们就简单的获取apple搜索结果的第一条记录中url数据
+        alert(data.responseDetails);
+    }
+</script>
+
+</body>
+</html>
