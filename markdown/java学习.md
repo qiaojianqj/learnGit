@@ -35,7 +35,16 @@
 >
 > String取length是取的字符串的代码单元的个数。
 >
+> ~~~java
+> String hehe = "😄";
+> System.out.println ( hehe.length () ); //2
+> ~~~
+>
 > Console类用于输入密码，为了安全起见，返回的密码存放在一维字符数组中， 而不是字符串中。
+>
+> ~~~
+> 因为字符串有字符串常量池，导致密码长期保存在内存中，容易通过jmap+jhat分析出密码来，而使用字符数组，用完即可置为null，相对安全
+> ~~~
 >
 > 在 C++ 中， 可以在嵌套的块中重定义一个变量。 在内层定义的变量会覆盖在外层定义的变量。 但是，在java中不允许嵌套块中重定义外层的变量。
 >
@@ -83,13 +92,13 @@
 > 
 > //try语句带return，finally执行时机
 > try {
->     if (a == 123) {
->         System.out.println ( "in try return a = " + a );
->         return; // 执行到此处，记录return的值，然后执行finally代码块，再然后return
->     }
+>  if (a == 123) {
+>      System.out.println ( "in try return a = " + a );
+>      return; // 执行到此处，记录return的值，然后执行finally代码块，再然后return
+>  }
 > } finally {
->     a = 1234;
->     System.out.println ( "in finally a = " + a );
+>  a = 1234;
+>  System.out.println ( "in finally a = " + a );
 > }
 > ~~~
 
@@ -109,24 +118,32 @@
 >
 > 不要编写返回引用可变数据域对象的访问器方法。 如果需要返回一个可变数据域的拷贝， 就应该使用 clone。 
 >
+> 1. Get不使用clone，直接返回引用
+>
+> ![](https://qiaojiande-1259482780.cos.ap-chengdu.myqcloud.com/201908/java-base-get-return-ref-1.jpg)
+>
+> 2. Get返回引用对象的clone
+>
+> ![](https://qiaojiande-1259482780.cos.ap-chengdu.myqcloud.com/201908/java-base-get-return-ref-2.jpg)
+>
 > 对于可变的类， 使用 final 修饰符可能会对读者造成混乱。  
 >
 > ```java
 > class Test {
->     private final  StringBuilder evaluations;
+>  private final  StringBuilder evaluations;
 > 
->     public Test(){
->         evaluations = new StringBuilder (  );
->     }
+>  public Test(){
+>      evaluations = new StringBuilder (  );
+>  }
 > 
->     //final 关键字只是表示存储在 evaluations 变量中的对象引用不会再指示其他 StringBuilder 对象。 不过这个对象可以更改
->     public void giveGoldStar() {
->         evaluations.append ( new Date () + ": Gold Star!\n" );
->     }
+>  //final 关键字只是表示存储在 evaluations 变量中的对象引用不会再指示其他 StringBuilder 对象。 不过这个对象可以更改
+>  public void giveGoldStar() {
+>      evaluations.append ( new Date () + ": Gold Star!\n" );
+>  }
 > 
->     public  void printTest() {
->         System.out.println ( evaluations );
->     }
+>  public  void printTest() {
+>      System.out.println ( evaluations );
+>  }
 > }
 > ```
 >
@@ -148,18 +165,18 @@
 >
 > ~~~java
 > class Employee {
->     private String name = "";
->     ...
+>  private String name = "";
+>  ...
 > }
 > ~~~
 >
->  一个构造函数可以通过this引用调用另一个构造函数
+> 一个构造函数可以通过this引用调用另一个构造函数
 >
 > ~~~java
 > public Employee(double s) {
->     //call Employee(String, double)
->     this("something", s);
->     ...
+>  //call Employee(String, double)
+>  this("something", s);
+>  ...
 > }
 > ~~~
 >
@@ -197,7 +214,7 @@
 > e = new Manager(); //ok, Manager extends from Employee
 > ~~~
 >
->  在 Java 中，子类数组的引用可以转换成超类数组的引用，而不需要采用强制类型转换。但是一定要注意这种用法会引起以下类型紊乱的错误。
+> 在 Java 中，子类数组的引用可以转换成超类数组的引用，而不需要采用强制类型转换。但是一定要注意这种用法会引起以下类型紊乱的错误。
 >
 > ~~~java
 > Manager[] managers = new Manager[10];
@@ -206,7 +223,7 @@
 > managers[0].setBonus(1000); //error, this will arise ArrayStoreException
 > ~~~
 >
->  返回类型不是签名的一部分， 因此，在覆盖方法时，一定要保证返回类型的兼容性。允许子类将覆盖方法的返回类型定义为原返回类型的子类型。 
+> 返回类型不是签名的一部分， 因此，在覆盖方法时，一定要保证返回类型的兼容性。允许子类将覆盖方法的返回类型定义为原返回类型的子类型。 
 >
 > 方法调用的两种方式：静态绑定（private方法、static方法、final方法），动态绑定（其他）
 >
@@ -265,7 +282,7 @@
 >
 > 对象包装器类（Integer，Long，Float，Double，Short，Byte，Character，Void，Boolean）是final类, 因此不能定义它们的子类。
 >
-> 自动装箱规范要求 boolean、byte、char 127， 介于 -128 ~ 127 之间的 short 和 int 被包装到固定的对象中。 因此
+> 自动装箱规范要求 介于 -128 ~ 127 之间的byte,  short , int, char(0~127) 被包装到固定的对象中(ByteCache,ShortCache,IntegerCache,CharacterCache)。 因此
 >
 > ~~~java
 > Integer a = 1000;
@@ -275,17 +292,60 @@
 > Integer a = 100;
 > Integer b = 100;
 > if (a == b) // true
+>   
+> System.out.println ( "--------Short--------" );
+> 
+> Short s1 = 12;
+> Short s2 = 12;
+> Short s3 = 129;
+> Short s4 = 129;
+> System.out.println ( s1 == s2 ); //true
+> System.out.println ( s3 == s4 ); //false
+> 
+> System.out.println ( "--------Byte--------" );
+> 
+> Byte b1 = 13;
+> Byte b2 = 13;
+> Byte b3 = 127;
+> Byte b4 = 127;
+> System.out.println ( b1 == b2 ); //true
+> System.out.println ( b3 == b4 ); //true
+> 
+> System.out.println ( "--------Character--------" );
+> 
+> Character c1 = 56;
+> Character c2 = 56;
+> Character c3 = 156;
+> Character c4 = 156;
+> System.out.println ( c1 == c2 ); //true
+> System.out.println ( c3 == c4 ); //false
 > ~~~
 >
->  不能通过将对象包装器类作为方法参数来修改它包装的数值，如果想编写一个修改数值参数值的方法，就需要使用在 org.omg.CORBA 包中定义的持有者(holder) 类型， 包括 IntHolder、BooleanHolder 等。 
+> 自动装箱拆箱陷阱
+>
+> ~~~java
+> Integer a = 1;
+> Integer b = 2;
+> Integer c = 3;
+> Integer e = 321;
+> Integer e1 = 300;
+> Integer e2 = 21;
+> Long g = 3L;
+> System.out.println ( e == (e1+e2) ); //true == 在遇到算术运算后，自动拆箱，比较值相等
+> System.out.println ( c.equals ( a+b ) ); //true a+b 算术运算后，自动装箱为Integer
+> System.out.println ( g == (a+b) ); // true a+b 算术运算后，自动拆箱为 3
+> System.out.println ( g.equals ( a+b ) ); //false equals方法不会处理数据类型转换的关系
+> ~~~
+>
+> 不能通过将对象包装器类作为方法参数来修改它包装的数值，如果想编写一个修改数值参数值的方法，就需要使用在 org.omg.CORBA 包中定义的持有者(holder) 类型， 包括 IntHolder、BooleanHolder 等。 
 >
 > ~~~java
 > public static void triple1(Integer x) { //won't work
->    x = 3 * x; //modify local variable
+> x = 3 * x; //modify local variable
 > }
 > 
 > public static void triple2(IntHolder x) { //work
->     x.value = 3 * x.value;
+>  x.value = 3 * x.value;
 > }
 > ~~~
 >
