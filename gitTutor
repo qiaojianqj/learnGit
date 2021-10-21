@@ -176,8 +176,7 @@ deploy_key_rsa
 #two tools
 #Gitosis: manage ssh pub key
 #Gitolite: manage access permission
-#merge conflict accept ours
+# auto merging conflict then accept ours
 git checkout --ours file
-#merge conflict accept theirs 
+#auto merging conflict then accept theirs
 git checkout --theirs file
-git checkout --ours 
